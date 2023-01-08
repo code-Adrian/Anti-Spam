@@ -1,11 +1,10 @@
-package com.ab.anti_spam.ui.gallery
+package com.ab.anti_spam.ui.callblacklist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
-
+class CallblacklistViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply {
         value = "This is gallery Fragment"
     }
