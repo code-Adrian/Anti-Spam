@@ -13,28 +13,24 @@
 
     <fragment
         android:id="@+id/nav_call_blacklist"
-        android:name="com.ab.anti_spam.ui.callblacklist.callblacklist"
-        android:label="fragment_callblacklist"
+        android:name="com.ab.anti_spam.ui.callblacklist.Callblacklist"
+        android:label="Personal Blacklist"
         tools:layout="@layout/fragment_callblacklist" />
     <fragment
         android:id="@+id/nav_sms_blacklist"
         android:name="com.ab.anti_spam.ui.smsblacklist.Smsblacklist"
-        android:label="fragment_smsblacklist"
+        android:label="SMS Warning"
         tools:layout="@layout/fragment_smsblacklist" />
     <fragment
         android:id="@+id/nav_community_blocking"
         android:name="com.ab.anti_spam.ui.communityblocking.Communityblocking"
-        android:label="fragment_communityblocking"
+        android:label="Community Blocking"
         tools:layout="@layout/fragment_communityblocking" />
     <fragment
         android:id="@+id/nav_learnscampatterns"
         android:name="com.ab.anti_spam.ui.scampatterns.Learnscampatterns"
         android:label="fragment_learnscampatterns"
         tools:layout="@layout/fragment_learnscampatterns" />
-    <fragment
-        android:id="@+id/nav_settings"
-        android:name="com.ab.anti_spam.ui.settings.Settings"
-        android:label="Settings" />
     <fragment
         android:id="@+id/nav_welcome"
         android:name="com.ab.anti_spam.ui.welcome.Welcome"

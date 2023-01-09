@@ -9,28 +9,28 @@ import android.view.ViewGroup
 import com.ab.anti_spam.databinding.FragmentCallblacklistBinding
 
 
-class callblacklist : Fragment() {
+class Callblacklist : Fragment() {
 
-    private var _binding: FragmentCallblacklistBinding? = null
+    private var _fragBinding: FragmentCallblacklistBinding? = null
 
-    private val binding get() = _binding!!
+    private val fragBinding get() = _fragBinding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val callblacklistViewModel =
-            ViewModelProvider(this).get(CallblacklistViewModel::class.java)
 
-        _binding = FragmentCallblacklistBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        _fragBinding = FragmentCallblacklistBinding.inflate(inflater, container, false)
+        val root = fragBinding.root
+        activity?.title  = "Personal Blacklist"
+
+        fragBinding.fab.setOnClickListener{
+
+        }
 
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        _fragBinding = null
     }
 }

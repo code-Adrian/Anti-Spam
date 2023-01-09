@@ -33,4 +33,7 @@
     <string name="learn_scam">Learn Scam</string>
     <string name="get_started">Get started</string>
     <string name="logo">Logo</string>
+    <string name="add_blacklisting">Add blacklisting</string>
+    <string name="personal_blacklist_image">Personal Blacklist Image</string>
+    <string name="PB_text">The blacklist is empty. Tap the + button to block a phone number.</string>
 </resources>
