@@ -15,7 +15,17 @@
         android:id="@+id/nav_call_blacklist"
         android:name="com.ab.anti_spam.ui.callblacklist.Callblacklist"
         android:label="Personal Blacklist"
-        tools:layout="@layout/fragment_callblacklist" />
+        tools:layout="@layout/fragment_callblacklist" >
+        <action
+            android:id="@+id/action_nav_call_blacklist_to_nav_optionsDialog"
+            app:destination="@id/nav_optionsDialog" />
+        <action
+            android:id="@+id/action_nav_call_blacklist_to_nav_countryBlockDialog"
+            app:destination="@id/nav_countryBlockDialog" />
+        <action
+            android:id="@+id/action_nav_call_blacklist_to_nav_countryBlockDialog2"
+            app:destination="@id/nav_countryBlockDialog" />
+    </fragment>
     <fragment
         android:id="@+id/nav_sms_blacklist"
         android:name="com.ab.anti_spam.ui.smsblacklist.Smsblacklist"
@@ -36,4 +46,30 @@
         android:name="com.ab.anti_spam.ui.welcome.Welcome"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" />
+    <dialog
+        android:id="@+id/nav_optionsDialog"
+        android:name="com.ab.anti_spam.ui.callblacklist.OptionsDialog"
+        android:label="OptionsDialog"
+        tools:layout="@layout/callblacklist_options_dialog"
+        >
+        <action
+            android:id="@+id/action_optionsDialog_to_countryBlockDialog"
+            app:destination="@id/nav_countryBlockDialog"
+            tools:layout="@layout/callblacklist_countryblock_dialog"
+            />
+        <action
+            android:id="@+id/action_nav_optionsDialog_to_nav_call_blacklist"
+            app:destination="@id/nav_call_blacklist" />
+    </dialog>
+    <dialog
+        android:id="@+id/nav_countryBlockDialog"
+        android:name="com.ab.anti_spam.ui.callblacklist.CountryBlockDialog"
+        android:label="CountryBlockDialog" >
+        <action
+            android:id="@+id/action_nav_countryBlockDialog_to_nav_optionsDialog"
+            app:destination="@id/nav_optionsDialog" />
+        <action
+            android:id="@+id/action_nav_countryBlockDialog_to_nav_call_blacklist"
+            app:destination="@id/nav_call_blacklist" />
+    </dialog>
 </navigation>
