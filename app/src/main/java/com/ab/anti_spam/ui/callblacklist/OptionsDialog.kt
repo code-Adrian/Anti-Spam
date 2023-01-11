@@ -33,6 +33,14 @@ class OptionsDialog: DialogFragment() {
         val root = fragBinding.root
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+    listeners()
+
+
+
+        return root
+    }
+
+    private fun listeners(){
         fragBinding.countryBlock.setOnClickListener{
 
             //Dismiss current dialog (OptionsDialog)
@@ -42,8 +50,16 @@ class OptionsDialog: DialogFragment() {
 
         }
 
+        fragBinding.numberBlock.setOnClickListener{
+            dismiss()
+            findNavController().navigate(R.id.action_nav_call_blacklist_to_numberBlockDialog)
 
+        }
 
-        return root
+        fragBinding.regexBlock.setOnClickListener{
+            dismiss()
+            findNavController().navigate(R.id.action_nav_call_blacklist_to_regexBlockDialog)
+        }
     }
+
 }

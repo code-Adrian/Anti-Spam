@@ -23,8 +23,11 @@
             android:id="@+id/action_nav_call_blacklist_to_nav_countryBlockDialog"
             app:destination="@id/nav_countryBlockDialog" />
         <action
-            android:id="@+id/action_nav_call_blacklist_to_nav_countryBlockDialog2"
-            app:destination="@id/nav_countryBlockDialog" />
+            android:id="@+id/action_nav_call_blacklist_to_numberBlockDialog"
+            app:destination="@id/numberBlockDialog" />
+        <action
+            android:id="@+id/action_nav_call_blacklist_to_regexBlockDialog"
+            app:destination="@id/regexBlockDialog" />
     </fragment>
     <fragment
         android:id="@+id/nav_sms_blacklist"
@@ -60,6 +63,9 @@
         <action
             android:id="@+id/action_nav_optionsDialog_to_nav_call_blacklist"
             app:destination="@id/nav_call_blacklist" />
+        <action
+            android:id="@+id/action_nav_optionsDialog_to_numberBlockDialog"
+            app:destination="@id/numberBlockDialog" />
     </dialog>
     <dialog
         android:id="@+id/nav_countryBlockDialog"
@@ -70,6 +76,25 @@
             app:destination="@id/nav_optionsDialog" />
         <action
             android:id="@+id/action_nav_countryBlockDialog_to_nav_call_blacklist"
+            app:destination="@id/nav_call_blacklist" />
+    </dialog>
+    <dialog
+        android:id="@+id/numberBlockDialog"
+        android:name="com.ab.anti_spam.ui.callblacklist.NumberBlockDialog"
+        android:label="NumberBlockDialog" >
+        <action
+            android:id="@+id/action_numberBlockDialog_to_nav_call_blacklist"
+            app:destination="@id/nav_call_blacklist" />
+        <action
+            android:id="@+id/action_numberBlockDialog_to_nav_optionsDialog"
+            app:destination="@id/nav_optionsDialog" />
+    </dialog>
+    <dialog
+        android:id="@+id/regexBlockDialog"
+        android:name="com.ab.anti_spam.ui.callblacklist.RegexBlockDialog"
+        android:label="RegexBlockDialog" >
+        <action
+            android:id="@+id/action_regexBlockDialog_to_nav_call_blacklist"
             app:destination="@id/nav_call_blacklist" />
     </dialog>
 </navigation>
