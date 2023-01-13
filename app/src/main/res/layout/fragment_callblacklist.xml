@@ -8,6 +8,7 @@
     tools:context=".ui.callblacklist.Callblacklist">
 
 <ImageView
+    android:id="@+id/block_icon"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:contentDescription="@string/personal_blacklist_image"
@@ -16,6 +17,7 @@
     android:background="@drawable/personalblacklist"
     />
     <TextView
+        android:id="@+id/block_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -24,6 +26,13 @@
         android:layout_marginTop="25dp"
         android:textSize="20sp"
         android:text="@string/PB_text"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/callblacklist_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

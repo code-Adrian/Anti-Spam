@@ -33,7 +33,7 @@ class Screeningservice: CallScreeningService() {
     }
 
     private fun getPhoneNumber(callDetails: Call.Details): String {
-        return callDetails.handle.toString().replace("tel:","")
+        return callDetails.handle.toString().replace("tel:","").replace("%2B","+")
         //.removeTelPrefix().parseCountryCode()
     }
 }

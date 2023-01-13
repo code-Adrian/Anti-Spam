@@ -3,8 +3,10 @@ package com.ab.anti_spam.localstorage
 import com.ab.anti_spam.models.CallBlacklistModel
 
 interface CallBlacklistInterface {
-    fun getCurrentUserModel(uid: String) : CallBlacklistModel
-    fun serialize(model: CallBlacklistModel)
+    fun getAll() : MutableList<CallBlacklistModel>
+    fun serialize(model: MutableList<CallBlacklistModel>)
     fun deserialize()
-    fun update(model: CallBlacklistModel,uid: String)
+    fun update(model: CallBlacklistModel)
+    fun add(model: CallBlacklistModel)
+    fun delete(model: CallBlacklistModel)
 }

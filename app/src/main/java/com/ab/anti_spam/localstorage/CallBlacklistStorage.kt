@@ -15,7 +15,7 @@ val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
     .create()
 val listType: Type = object : TypeToken<ArrayList<CallBlacklistModel>>() {}.type
 
-class CallBlacklistStorage(private val context: Context): CallBlacklistInterface{
+class CallBlacklistStorage(private val context: Context) : CallBlacklistInterface {
 
     var blacklist = mutableListOf<CallBlacklistModel>()
 
@@ -25,35 +25,56 @@ class CallBlacklistStorage(private val context: Context): CallBlacklistInterface
         }
     }
 
-    override fun getCurrentUserModel(uid: String): CallBlacklistModel {
-        deserialize()
-        val foundUserBlacklist: CallBlacklistModel? = blacklist.find { id -> id.user_id == uid }
-        return foundUserBlacklist!!
+    override fun getAll(): MutableList<CallBlacklistModel> {
+        blacklist.clear()
+            if(exists(context, JSON_FILE)){
+                deserialize()
+            }else{
+                println("Could not find call blacklist file.")
+            }
+
+        return blacklist
     }
 
-    override fun serialize(model: CallBlacklistModel) {
-        deserialize()
-        blacklist.add(model)
-        val jsonString = read(context, JSON_FILE)
-        blacklist = gsonBuilder.fromJson(jsonString, listType)
+    override fun serialize(model: MutableList<CallBlacklistModel>) {
+        val jsonString = gsonBuilder.toJson(model, listType)
+        write(context, JSON_FILE, jsonString)
     }
 
     override fun deserialize() {
-        val jsonString = read(context, JSON_FILE)
-        blacklist = gsonBuilder.fromJson(jsonString, listType)
+            if(exists(context, JSON_FILE)) {
+                val jsonString = read(context, JSON_FILE)
+                blacklist = gsonBuilder.fromJson(jsonString, listType)
+            }else{
+                println("Could not find call blacklist file.")
+            }
     }
 
-    override fun update(model: CallBlacklistModel, uid: String) {
+    override fun update(model: CallBlacklistModel) {
         deserialize()
-        val foundUserBlacklist: CallBlacklistModel? = blacklist.find { id -> id.user_id == uid }
-        if(foundUserBlacklist != null){
+        val foundUserBlacklist: CallBlacklistModel? = blacklist.find { id -> id.id == model.id }
+        if (foundUserBlacklist != null) {
             foundUserBlacklist.by_country = model.by_country
             foundUserBlacklist.by_number = model.by_number
             foundUserBlacklist.by_regex = model.by_regex
-            serialize(foundUserBlacklist)
+            serialize(blacklist)
         }
     }
 
+    override fun add(model: CallBlacklistModel){
+        blacklist.clear()
+        deserialize()
+        blacklist.add(model)
+        serialize(blacklist)
+    }
+
+    override fun delete(model: CallBlacklistModel){
+        blacklist.clear()
+        deserialize()
+        val foundUserBlacklist: CallBlacklistModel? = blacklist.find { id -> id.id == model.id }
+       blacklist.remove(foundUserBlacklist)
+        serialize(blacklist)
+    }
 }
 
 class Parse : JsonDeserializer<Uri>,JsonSerializer<Uri> {
