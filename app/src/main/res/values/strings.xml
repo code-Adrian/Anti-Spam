@@ -50,6 +50,12 @@
     <string name="block_regex">Regex Block</string>
     <string name="personal_sms_black_list_image">personal sms black list image</string>
     <string name="PBS_text">The blacklist is empty. Tap the + button to warn by SMS.</string>
+    <string name="block_by_keyword">Block by keyword</string>
+    <string name="keyword_warning">Keyword Warning</string>
+    <string name="warn_by_keyword">Warn by keyword</string>
+    <string name="hint_keyword">https://bit.ly/3TKVfjZ</string>
+    <string name="regex_warning">Regex Warning</string>
+    <string name="warn_by_regex">Warn by regex</string>
 
     <string-array name="countries">
         <item>Afghanistan (+93)</item>

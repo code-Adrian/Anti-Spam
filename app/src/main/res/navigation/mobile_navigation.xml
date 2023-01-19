@@ -33,7 +33,17 @@
         android:id="@+id/nav_sms_blacklist"
         android:name="com.ab.anti_spam.ui.smsblacklist.Smsblacklist"
         android:label="SMS Warning"
-        tools:layout="@layout/fragment_smsblacklist" />
+        tools:layout="@layout/fragment_smsblacklist" >
+        <action
+            android:id="@+id/action_nav_sms_blacklist_to_SMSRegexBlockDialog"
+            app:destination="@id/SMSRegexBlockDialog" />
+        <action
+            android:id="@+id/action_nav_sms_blacklist_to_keywordBlockDialog"
+            app:destination="@id/keywordBlockDialog" />
+        <action
+            android:id="@+id/action_nav_sms_blacklist_to_SMSOptionsDialog"
+            app:destination="@id/SMSOptionsDialog" />
+    </fragment>
     <fragment
         android:id="@+id/nav_community_blocking"
         android:name="com.ab.anti_spam.ui.communityblocking.Communityblocking"
@@ -112,4 +122,28 @@
         android:name="com.ab.anti_spam.ui.callblacklist.RegexBlockViewPager"
         android:label="fragment_regex_block_view_pager"
         tools:layout="@layout/fragment_regex_block_view_pager" />
+    <dialog
+        android:id="@+id/keywordBlockDialog"
+        android:name="com.ab.anti_spam.ui.smsblacklist.KeywordBlockDialog"
+        android:label="KeywordBlockDialog" >
+        <action
+            android:id="@+id/action_keywordBlockDialog_to_nav_sms_blacklist"
+            app:destination="@id/nav_sms_blacklist" />
+    </dialog>
+    <dialog
+        android:id="@+id/SMSOptionsDialog"
+        android:name="com.ab.anti_spam.ui.smsblacklist.SMSOptionsDialog"
+        android:label="SMSOptionsDialog" >
+        <action
+            android:id="@+id/action_SMSOptionsDialog_to_nav_sms_blacklist"
+            app:destination="@id/nav_sms_blacklist" />
+    </dialog>
+    <dialog
+        android:id="@+id/SMSRegexBlockDialog"
+        android:name="com.ab.anti_spam.ui.smsblacklist.SMSRegexBlockDialog"
+        android:label="SMSRegexBlockDialog" >
+        <action
+            android:id="@+id/action_SMSRegexBlockDialog_to_nav_sms_blacklist"
+            app:destination="@id/nav_sms_blacklist" />
+    </dialog>
 </navigation>

@@ -36,7 +36,8 @@ class Smsblacklist : Fragment() {
         val root = fragBinding.root
 
         fragBinding.fab.setOnClickListener{
-            //Dialog
+            val optionsDialog = SMSOptionsDialog()
+            optionsDialog.show(parentFragmentManager,null)
         }
 
         observer()
@@ -44,7 +45,6 @@ class Smsblacklist : Fragment() {
         return root
     }
 
-    
 
     private fun observer(){
         blacklistViewModel.refresh(app)
