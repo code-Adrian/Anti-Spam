@@ -97,4 +97,19 @@
             android:id="@+id/action_regexBlockDialog_to_nav_call_blacklist"
             app:destination="@id/nav_call_blacklist" />
     </dialog>
+    <fragment
+        android:id="@+id/countryBlockViewPager"
+        android:name="com.ab.anti_spam.ui.callblacklist.CountryBlockViewPager"
+        android:label="fragment_country_block_view_pager"
+        tools:layout="@layout/fragment_country_block_view_pager" />
+    <fragment
+        android:id="@+id/numberBlockViewPager"
+        android:name="com.ab.anti_spam.ui.callblacklist.NumberBlockViewPager"
+        android:label="fragment_number_block_view_pager"
+        tools:layout="@layout/fragment_number_block_view_pager" />
+    <fragment
+        android:id="@+id/regexBlockViewPager"
+        android:name="com.ab.anti_spam.ui.callblacklist.RegexBlockViewPager"
+        android:label="fragment_regex_block_view_pager"
+        tools:layout="@layout/fragment_regex_block_view_pager" />
 </navigation>

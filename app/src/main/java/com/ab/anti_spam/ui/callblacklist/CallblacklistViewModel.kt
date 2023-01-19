@@ -29,7 +29,6 @@ class CallblacklistViewModel() : ViewModel()  {
     fun refresh(app: Main){
         var localStorage =  CallBlacklistStorage(app.applicationContext)
         blacklist.value = localStorage.getAll()
-
     }
 
     fun addBlacklist(model: CallBlacklistModel,app: Main){

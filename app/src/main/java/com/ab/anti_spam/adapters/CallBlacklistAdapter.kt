@@ -3,6 +3,7 @@ package com.ab.anti_spam.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ab.anti_spam.R
 import com.ab.anti_spam.models.CallBlacklistModel
 import com.ab.anti_spam.databinding.CallblacklistCardBinding
 
@@ -36,6 +37,17 @@ class CallBlacklistAdapter constructor(private var blacklist: MutableList<CallBl
 
             binding.root.tag = model
             binding.callblacklist = model
+
+            if(model.by_country.isNotEmpty()){
+                binding.icon.setBackgroundResource(R.drawable.country)
+            }
+            if(model.by_number.isNotEmpty()){
+                binding.icon.setBackgroundResource(R.drawable.phonenumber)
+            }
+            if(model.by_regex.isNotEmpty()){
+                binding.icon.setBackgroundResource(R.drawable.regex)
+            }
+
             binding.remove.setOnClickListener{
                 deleteListener.onDeleteClick(model)
             }
