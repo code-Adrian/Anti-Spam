@@ -1,15 +1,19 @@
 package com.ab.anti_spam.ui.callblacklist
 
 import android.os.Bundle
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
+import com.ab.anti_spam.R
 import com.ab.anti_spam.adapters.CallBlacklistAdapter
 import com.ab.anti_spam.adapters.CallBlacklistTablayoutAdapter
 import com.ab.anti_spam.adapters.deleteListener
@@ -34,11 +38,6 @@ class Callblacklist : Fragment(),deleteListener {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         _fragBinding = FragmentCallblacklistBinding.inflate(inflater, container, false)
@@ -51,11 +50,11 @@ class Callblacklist : Fragment(),deleteListener {
             optionsDialog.show(parentFragmentManager,null)
         }
 
+
+        setupMenu()
         emptyStorageLayout()
         observer()
         tabLayoutSetup()
-
-
 
         return root
     }
@@ -109,4 +108,21 @@ class Callblacklist : Fragment(),deleteListener {
     override fun onDeleteClick(model: CallBlacklistModel) {
         blacklistViewModel.deleteModel(model,app)
     }
+
+    private fun setupMenu(){
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                return menuInflater.inflate(R.menu.call_blacklist_menu,menu)
+
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return NavigationUI.onNavDestinationSelected(menuItem,
+                    requireView().findNavController())
+            }
+
+        },viewLifecycleOwner,Lifecycle.State.RESUMED)
+    }
+
 }
