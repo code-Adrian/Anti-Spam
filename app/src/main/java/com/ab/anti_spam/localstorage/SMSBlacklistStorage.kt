@@ -30,7 +30,7 @@ class SMSBlacklistStorage(private val context: Context) : SMSBlacklistInterface 
         if(exists(context, JSON_FILE_SMS)){
             deserialize()
         }else{
-            println("Could not find call blacklist file.")
+            println("Could not find sms blacklist file.")
         }
 
         return blacklist
@@ -46,7 +46,7 @@ class SMSBlacklistStorage(private val context: Context) : SMSBlacklistInterface 
             val jsonString = read(context, JSON_FILE_SMS)
             blacklist = gsonBuilderSMS.fromJson(jsonString, listTypeSMS)
         }else{
-            println("Could not find call blacklist file.")
+            println("Could not find sms blacklist file.")
         }
     }
 

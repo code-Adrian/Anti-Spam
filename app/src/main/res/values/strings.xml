@@ -48,6 +48,8 @@
     <string name="hint_regex">/(D*d){8}/</string>
     <string name="number_block">Number Block</string>
     <string name="block_regex">Regex Block</string>
+    <string name="personal_sms_black_list_image">personal sms black list image</string>
+    <string name="PBS_text">The blacklist is empty. Tap the + button to warn by SMS.</string>
 
     <string-array name="countries">
         <item>Afghanistan (+93)</item>
