@@ -1,0 +1,74 @@
+package com.ab.anti_spam.ui.smsblacklist
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.ab.anti_spam.adapters.SMSBlacklistAdapter
+import com.ab.anti_spam.adapters.deleteListenerSMS
+import com.ab.anti_spam.databinding.FragmentSMSRegexBlockViewPagerBinding
+import com.ab.anti_spam.main.Main
+import com.ab.anti_spam.models.SMSBlacklistModel
+
+class SMSRegexBlockViewPager : Fragment(), deleteListenerSMS {
+
+    lateinit var app: Main
+    private var _fragBinding: FragmentSMSRegexBlockViewPagerBinding? = null
+    lateinit var adapter: SMSBlacklistAdapter
+    private val blacklistViewModel: SmsblacklistViewModel by activityViewModels()
+    private val fragBinding get() = _fragBinding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        app = activity?.application as Main
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        _fragBinding = FragmentSMSRegexBlockViewPagerBinding.inflate(inflater, container, false)
+        val root = fragBinding.root
+
+
+        loadBlacklist()
+
+        return root
+    }
+
+    private fun loadBlacklist(){
+        fragBinding.smsblacklistRecyclerview.adapter?.notifyDataSetChanged()
+        blacklistViewModel.refresh(app)
+        blacklistViewModel.observableBlacklist.observe(viewLifecycleOwner, Observer { blacklist ->
+            blacklist?.let {
+                renderRecyclerView(blacklist as ArrayList<SMSBlacklistModel>)
+            }
+        })
+    }
+
+    private fun renderRecyclerView(model: ArrayList<SMSBlacklistModel>){
+        fragBinding.smsblacklistRecyclerview.layoutManager = LinearLayoutManager(activity)
+        fragBinding.smsblacklistRecyclerview.adapter = SMSBlacklistAdapter(filterModelKeywordOnly(model) as ArrayList<SMSBlacklistModel>,this)
+        adapter = fragBinding.smsblacklistRecyclerview.adapter as SMSBlacklistAdapter
+    }
+
+    private fun filterModelKeywordOnly(model: ArrayList<SMSBlacklistModel>) : ArrayList<SMSBlacklistModel>{
+        val filteredArray = ArrayList<SMSBlacklistModel>()
+        for(i in model){
+            if(i.by_regex.isNotEmpty()){
+                filteredArray.add(i)
+            }
+        }
+        return filteredArray
+    }
+
+    override fun onDeleteClick(model: SMSBlacklistModel) {
+        blacklistViewModel.deleteModel(model,app)
+    }
+
+}

@@ -33,6 +33,9 @@ class SMSBlacklistAdapter constructor(private var blacklist: MutableList<SMSBlac
             binding.root.tag = model
             binding.smsblacklist = model
 
+            if(model.by_keyword.isNotEmpty()){
+                binding.icon.setBackgroundResource(R.drawable.iconkeyword)
+            }
             if(model.by_regex.isNotEmpty()){
                 binding.icon.setBackgroundResource(R.drawable.regex)
             }
