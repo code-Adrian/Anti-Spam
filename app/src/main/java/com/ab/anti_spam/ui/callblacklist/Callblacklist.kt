@@ -1,25 +1,25 @@
 package com.ab.anti_spam.ui.callblacklist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.ab.anti_spam.R
-import com.ab.anti_spam.adapters.CallBlacklistAdapter
 import com.ab.anti_spam.adapters.CallBlacklistTablayoutAdapter
 import com.ab.anti_spam.adapters.deleteListener
 import com.ab.anti_spam.databinding.FragmentCallblacklistBinding
 import com.ab.anti_spam.main.Main
 import com.ab.anti_spam.models.CallBlacklistModel
+import com.ab.anti_spam.smswarning.overlayservice
 import com.google.android.material.tabs.TabLayout
 
 
@@ -49,7 +49,6 @@ class Callblacklist : Fragment(),deleteListener {
             val optionsDialog = OptionsDialog()
             optionsDialog.show(parentFragmentManager,null)
         }
-
 
         setupMenu()
         emptyStorageLayout()

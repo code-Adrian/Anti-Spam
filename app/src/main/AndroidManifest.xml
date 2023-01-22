@@ -50,6 +50,18 @@
             </intent-filter>
         </service>
 
+        <service android:name=".smswarning.overlayservice">
+
+        </service>
+
+        <receiver android:name=".smswarning.SmsReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+
+        </receiver>
+
     </application>
 
 </manifest>
