@@ -17,7 +17,7 @@ class Communityblocking : Fragment() {
     lateinit var app: Main
     private var _fragBinding: FragmentCommunityblockingBinding? = null
     private val fragBinding get() = _fragBinding!!
-    private val blacklistViewModel: CommunityblockingViewModel by activityViewModels()
+    private val communityViewModel: CommunityblockingViewModel by activityViewModels()
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
