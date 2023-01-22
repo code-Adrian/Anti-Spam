@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.ab.anti_spam.ui.smsblacklist.SMSKeywordBlockViewPager
 import com.ab.anti_spam.ui.smsblacklist.SMSRegexBlockViewPager
 
-internal class SMSBlacklistTablayoutAdapter(var context: Context, var fm: FragmentManager, var totalTabs: Int): FragmentPagerAdapter(fm) {
+internal class SMSBlacklistTablayoutAdapter(var context: Context, var fm: FragmentManager, var totalTabs: Int): FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         return when(position){
