@@ -10,6 +10,9 @@ import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.FragmentCommunityUserReportViewPagerBinding
 import com.ab.anti_spam.databinding.FragmentPersonalUserReportViewPagerBinding
 import com.ab.anti_spam.main.Main
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 
 
 class PersonalUserReportViewPager : Fragment() {
@@ -31,7 +34,7 @@ class PersonalUserReportViewPager : Fragment() {
 
         _fragBinding = FragmentPersonalUserReportViewPagerBinding.inflate(inflater, container, false)
         val root = fragBinding.root
-
+        
         return root
     }
 
