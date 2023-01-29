@@ -56,6 +56,8 @@
     <string name="hint_keyword">https://bit.ly/3TKVfjZ</string>
     <string name="regex_warning">Regex Warning</string>
     <string name="warn_by_regex">Warn by regex</string>
+    <string name="community_image">community_image</string>
+    <string name="community_empty_text">Community reports seem to be empty. Tap the + button to report a fraudulent phone number.</string>
 
     <string-array name="countries">
         <item>Afghanistan (+93)</item>

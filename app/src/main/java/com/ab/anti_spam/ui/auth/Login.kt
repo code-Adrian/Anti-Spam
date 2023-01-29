@@ -77,7 +77,7 @@ class Login: AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
         //Give the user an option to choose permissions
         if(EasyPermissions.somePermissionPermanentlyDenied(this,perms)){
-            AppSettingsDialog.Builder(this).build().show()
+            //AppSettingsDialog.Builder(this).build().show()
 
         }else{
             requestPermissions()

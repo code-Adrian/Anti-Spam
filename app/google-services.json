@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "624673346730",
-    "project_id": "anti-spam-be557",
-    "storage_bucket": "anti-spam-be557.appspot.com"
+    "project_number": "732544100703",
+    "firebase_url": "https://anti-spam-26221-default-rtdb.firebaseio.com",
+    "project_id": "anti-spam-26221",
+    "storage_bucket": "anti-spam-26221.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:624673346730:android:df0bdef72169a76726acd3",
+        "mobilesdk_app_id": "1:732544100703:android:a271d167ae32e2bbd9eeea",
         "android_client_info": {
           "package_name": "com.ab.anti_spam"
         }
       },
       "oauth_client": [
         {
-          "client_id": "624673346730-e806hnfl4j6o7pnt9h9vi0nu28anmfoc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ab.anti_spam",
-            "certificate_hash": "37ce8ea721c6b9f0cb76765abcbe077799ffe349"
-          }
-        },
-        {
-          "client_id": "624673346730-nfhlrp85kpdvgjhlad1l02931mglfhvn.apps.googleusercontent.com",
+          "client_id": "732544100703-khs37mvlj0nn71aqej1bva89vajdohik.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBrIyDSUCkGwxuh7Wq4CrIUg6DeCUgZc44"
+          "current_key": "AIzaSyCNNzv1rHR7W9WlCXRU7tbkUBKgRFzzgYE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "624673346730-nfhlrp85kpdvgjhlad1l02931mglfhvn.apps.googleusercontent.com",
+              "client_id": "732544100703-khs37mvlj0nn71aqej1bva89vajdohik.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

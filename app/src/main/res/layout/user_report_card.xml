@@ -19,53 +19,103 @@
         >
 
         <RelativeLayout
+            android:id="@+id/background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="150dp"
+            android:background="@drawable/icon_gradient_medium"
+            >
 
             <View
                 android:id="@+id/seperator"
                 android:layout_width="1dp"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
+                android:layout_alignParentTop="true"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_toEndOf="@id/pieChart"
-                android:background="#FF0000FF" />
+                android:background="@color/blueish" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/pieChart"
+                android:layout_marginStart="47dp"
+                android:layout_marginBottom="22dp"
+                android:textSize="14dp"
+                android:text="Comments" />
+
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:textSize="14dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 />
+
+
+
+            <View
+                android:id="@+id/seperator2"
+                android:layout_width="165dp"
+                android:layout_height="0.9dp"
+                android:layout_marginTop="58dp"
+                android:layout_marginStart="15dp"
+
+
+                android:layout_toEndOf="@id/seperator"
+                android:background="@color/blueish" />
 
             <TextView
                 android:id="@+id/reported_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_toEndOf="@id/seperator"
                 android:text='@{communitymodel.reported_phone_number}'
-                android:textSize="20dp"
+                android:textSize="25dp"
                 />
 
             <TextView
+                android:id="@+id/country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="65dp"
-                android:layout_marginStart="35dp"
+                android:layout_marginTop="72dp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/seperator"
-                android:text='@{`Country: `+communitymodel.country}'
+                android:text='Country: '
+                android:textSize="19dp"
+                />
+            <TextView
+                android:id="@+id/country_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="72dp"
+                android:layout_toEndOf="@id/country"
+                android:text='@{communitymodel.country}'
                 android:textSize="19dp"
                 />
 
             <TextView
+                android:id="@+id/warning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="110dp"
-                android:layout_marginStart="35dp"
+                android:layout_marginTop="105dp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/seperator"
-                android:text='@{`Warning: `+communitymodel.risk_Level}'
+                android:text='Warning: '
+                android:textSize="19dp"
+                />
+            <TextView
+                android:id="@+id/warning_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="105dp"
+                android:layout_toEndOf="@id/warning"
+                android:text='@{communitymodel.risk_Level}'
                 android:textSize="19dp"
                 />
         </RelativeLayout>

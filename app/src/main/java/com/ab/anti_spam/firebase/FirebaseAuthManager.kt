@@ -39,7 +39,6 @@ class FirebaseAuthManager(application: Application, login: Login?) {
 
     fun providers(){
         providers = arrayListOf(
-            AuthUI.IdpConfig.GoogleBuilder().build(),
             AuthUI.IdpConfig.PhoneBuilder().build(),
             AuthUI.IdpConfig.AnonymousBuilder().build(),
             AuthUI.IdpConfig.EmailBuilder().build()
