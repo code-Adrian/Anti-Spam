@@ -44,7 +44,6 @@ object FirebaseDBManager : CommunityDBInterface{
 
                             val id = (data.child("id").getValue().toString().toLong())
                             val user_id = (data.child("user_Id").getValue().toString())
-                            val report_title = (data.child("report_title").getValue().toString())
                             val report_Description =
                                 (data.child("report_Description").getValue().toString())
                             val reported_phone_number = (data.child("reported_phone_number").getValue().toString())
@@ -56,7 +55,7 @@ object FirebaseDBManager : CommunityDBInterface{
                             if (user_comments != null) {
                                 comments = user_comments
                             }
-                            val model = CommunityBlockingModel(id, user_id, report_title, report_Description, reported_phone_number, risk_level, country, comments)
+                            val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, comments)
 
                             localModel.add(model)
                         }
@@ -79,7 +78,6 @@ object FirebaseDBManager : CommunityDBInterface{
                     if(data.child("user_Id").getValue().toString().equals(currentUserUID)) {
                         val id = (data.child("id").getValue().toString().toLong())
                         val user_id = (data.child("user_Id").getValue().toString())
-                        val report_title = (data.child("report_title").getValue().toString())
                         val report_Description =
                             (data.child("report_Description").getValue().toString())
                         val reported_phone_number =
@@ -91,7 +89,7 @@ object FirebaseDBManager : CommunityDBInterface{
                         if (user_comments != null) {
                             comments = user_comments
                         }
-                        val model = CommunityBlockingModel(id, user_id, report_title, report_Description, reported_phone_number, risk_level, country, comments)
+                        val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, comments)
 
                         localModel.add(model)
                     }

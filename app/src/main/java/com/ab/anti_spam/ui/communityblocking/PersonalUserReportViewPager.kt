@@ -19,6 +19,7 @@ import com.ab.anti_spam.main.Main
 import com.ab.anti_spam.models.CommunityBlockingCommentsModel
 import com.ab.anti_spam.models.CommunityBlockingModel
 import com.ab.anti_spam.ui.auth.LoggedInViewModel
+import com.ab.anti_spam.ui.callblacklist.OptionsDialog
 
 
 class PersonalUserReportViewPager : Fragment(), cardClickListener {
@@ -42,7 +43,16 @@ class PersonalUserReportViewPager : Fragment(), cardClickListener {
         val root = fragBinding.root
 
         loadUserAndReports()
+        addUserReportListener()
         return root
+    }
+
+    fun addUserReportListener(){
+        fragBinding.fab.setOnClickListener{
+            val chooseNumberDialogDialog = AddUserReportChooseNumberDialog()
+            chooseNumberDialogDialog.show(parentFragmentManager,null)
+
+        }
     }
 
     private fun loadUserAndReports(){

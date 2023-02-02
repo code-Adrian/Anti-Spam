@@ -77,7 +77,7 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
             binding.background.setBackgroundResource(R.drawable.icon_gradient_high)
         }
         if(model.risk_Level.equals("Medium")){
-            binding.warningText.setTextColor(ColorTemplate.getHoloBlue())
+            binding.warningText.setTextColor(ColorTemplate.COLORFUL_COLORS[1])
             binding.background.setBackgroundResource(R.drawable.icon_gradient_medium)
         }
         if(model.risk_Level.equals("Low")){
@@ -168,6 +168,7 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
             entries.add(PieEntry(1F, "No Comments Available"))
             //Low
             colors.add(ColorTemplate.getHoloBlue())
+            binding.pieChart.isDrawHoleEnabled = false
             binding.pieChart.setDrawCenterText(true)
             binding.pieChart.setCenterTextSize(13f)
             binding.pieChart.setDrawSlicesUnderHole(true)
@@ -175,6 +176,7 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
             binding.pieChart.setHoleRadius(80f);
             binding.pieChart.setExtraOffsets(2F, 5F, 2F, 2F);
             binding.pieChart.centerText = "No\nComments"
+            binding.pieChart.setCenterTextColor(Color.WHITE)
         }
 
         //Apply dataSet to PieData
@@ -188,7 +190,7 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
         if(goodCommentCount > badCommentCount && goodCommentCount > mediumCommentCount){
             binding.pieChart.highlightValue(0F,0);
         }
-        if(mediumCommentCount > goodCommentCount && mediumCommentCount > goodCommentCount){
+        if(mediumCommentCount > goodCommentCount && mediumCommentCount > badCommentCount){
             binding.pieChart.highlightValue(1F,0);
         }
         if(badCommentCount > mediumCommentCount && badCommentCount > goodCommentCount ){
@@ -199,5 +201,4 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
         binding.pieChart.invalidate()
     }
 }
-
 }

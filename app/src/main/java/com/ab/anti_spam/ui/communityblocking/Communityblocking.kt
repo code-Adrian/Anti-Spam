@@ -1,6 +1,8 @@
 package com.ab.anti_spam.ui.communityblocking
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,41 +53,21 @@ class Communityblocking : Fragment() {
         tabLayout = fragBinding.tabLayout
         viewPager = fragBinding.viewPager
 
-
+        fragBinding.loading.visibility = View.VISIBLE
+        fragBinding.communityIcon.isVisible = false
+        fragBinding.emptyCommunityText.isVisible = false
 
         observer()
-fragBinding.fab.setOnClickListener{
-
-
+//fragBinding.fab.setOnClickListener{
 //    val comments1 = CommunityBlockingCommentsModel(1,"","","High","")
 //    val comments2 = CommunityBlockingCommentsModel(2,"","","Medium","")
 //    val comments3 = CommunityBlockingCommentsModel(3,"","","Low","")
 //    var test = mutableListOf<CommunityBlockingCommentsModel>()
 //   test.add(comments1)
-//   test.add(comments1)
-//   test.add(comments1)
-//   test.add(comments1)
-//   test.add(comments1)
-//   test.add(comments2)
-//   test.add(comments3)
-//   test.add(comments3)
-//   test.add(comments3)
-//   test.add(comments3)
-//   test.add(comments3)
-//   test.add(comments3)
-//   test.add(comments3)
-//   test.add(comments3)
-//   test.add(comments3)
-
-
   //  val model =  CommunityBlockingModel(genUID(),uid,"Scammer", "This scammer tried to scam me","0870991361","High","Ireland",test)
-//
-//
 //    communityViewModel.createReport(model,uid)
 //    communityViewModel.getRecent100UserReports()
-
-
-}
+//}
         tabLayoutSetup()
 
         return root
@@ -101,8 +83,11 @@ fragBinding.fab.setOnClickListener{
     fun observer(){
         communityViewModel.observableCommunityReportList.observe(viewLifecycleOwner,{it->
             it.let {
-                fragBinding.communityIcon.isVisible = false
-                fragBinding.emptyCommunityText.isVisible = false
+                fragBinding.loading.visibility = View.INVISIBLE
+                if(it.size == 0) {
+                    fragBinding.communityIcon.isVisible = true
+                    fragBinding.emptyCommunityText.isVisible = true
+                }
             }
 
         })

@@ -7,7 +7,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class CommunityBlockingModel(    var id: Long = 0,
                                       var user_Id: String = "",
-                                      var report_title: String = "",
                                       var report_Description: String = "",
                                       var reported_phone_number: String = "",
                                       var risk_Level: String = "",
@@ -18,7 +17,6 @@ data class CommunityBlockingModel(    var id: Long = 0,
         return mapOf<String,Any?>(
             "id" to id,
             "user_id" to user_Id,
-            "report_title" to report_title,
             "report_Description" to report_Description,
             "reported_phone_number" to reported_phone_number,
             "risk_level" to risk_Level,

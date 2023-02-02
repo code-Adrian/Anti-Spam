@@ -48,7 +48,20 @@
         android:id="@+id/nav_community_blocking"
         android:name="com.ab.anti_spam.ui.communityblocking.Communityblocking"
         android:label="Community Blocking"
-        tools:layout="@layout/fragment_communityblocking" />
+        tools:layout="@layout/fragment_communityblocking" >
+        <action
+            android:id="@+id/action_nav_community_blocking_to_personalUserReportViewPager"
+            app:destination="@id/personalUserReportViewPager" />
+        <action
+            android:id="@+id/action_nav_community_blocking_to_addUserReportChooseNumberDialog"
+            app:destination="@id/addUserReportChooseNumberDialog" />
+        <action
+            android:id="@+id/action_nav_community_blocking_to_addUserReportChooseNumberDialog2"
+            app:destination="@id/addUserReportChooseNumberDialog" />
+        <action
+            android:id="@+id/action_nav_community_blocking_to_addUserReportDialog2"
+            app:destination="@id/addUserReportDialog" />
+    </fragment>
     <fragment
         android:id="@+id/nav_learnscampatterns"
         android:name="com.ab.anti_spam.ui.scampatterns.Learnscampatterns"
@@ -145,5 +158,43 @@
         <action
             android:id="@+id/action_SMSRegexBlockDialog_to_nav_sms_blacklist"
             app:destination="@id/nav_sms_blacklist" />
+    </dialog>
+    <fragment
+        android:id="@+id/personalUserReportViewPager"
+        android:name="com.ab.anti_spam.ui.communityblocking.PersonalUserReportViewPager"
+        android:label="fragment_personal_user_report_view_pager"
+        tools:layout="@layout/fragment_personal_user_report_view_pager" >
+        <action
+            android:id="@+id/action_personalUserReportViewPager_to_addUserReportChooseNumberDialog"
+            app:destination="@id/addUserReportChooseNumberDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/addUserReportChooseNumberDialog"
+        android:name="com.ab.anti_spam.ui.communityblocking.AddUserReportChooseNumberDialog"
+        android:label="fragment_add_user_report_choose_number_dialog"
+        tools:layout="@layout/fragment_add_user_report_choose_number_dialog" />
+    <dialog
+        android:id="@+id/addUserReportDialog"
+        android:name="com.ab.anti_spam.ui.communityblocking.AddUserReportDialog"
+        android:label="fragment_add_user_report_dialog"
+        tools:layout="@layout/fragment_add_user_report_dialog" >
+        <argument
+            android:name="choosenumbermodel"
+            app:argType="com.ab.anti_spam.models.ChooseNumberModel" />
+        <action
+            android:id="@+id/action_addUserReportDialog_to_addUserReportChooseNumberDialog"
+            app:destination="@id/addUserReportChooseNumberDialog" />
+        <action
+            android:id="@+id/action_addUserReportDialog_to_addBlacklistQuestionDialog"
+            app:destination="@id/addBlacklistQuestionDialog" />
+    </dialog>
+    <dialog
+        android:id="@+id/addBlacklistQuestionDialog"
+        android:name="com.ab.anti_spam.ui.communityblocking.AddBlacklistQuestionDialog"
+        android:label="fragment_add_blacklist_question_dialog"
+        tools:layout="@layout/fragment_add_blacklist_question_dialog" >
+        <argument
+            android:name="model"
+            app:argType="com.ab.anti_spam.models.CommunityBlockingModel" />
     </dialog>
 </navigation>
