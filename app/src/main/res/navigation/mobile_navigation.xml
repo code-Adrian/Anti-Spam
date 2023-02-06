@@ -61,6 +61,12 @@
         <action
             android:id="@+id/action_nav_community_blocking_to_addUserReportDialog2"
             app:destination="@id/addUserReportDialog" />
+        <action
+            android:id="@+id/action_nav_community_blocking_to_communityUserReportViewPager"
+            app:destination="@id/communityUserReportViewPager" />
+        <action
+            android:id="@+id/action_nav_community_blocking_to_communityViewReport"
+            app:destination="@id/communityViewReport" />
     </fragment>
     <fragment
         android:id="@+id/nav_learnscampatterns"
@@ -196,5 +202,44 @@
         <argument
             android:name="model"
             app:argType="com.ab.anti_spam.models.CommunityBlockingModel" />
+    </dialog>
+    <fragment
+        android:id="@+id/communityViewReport"
+        android:name="com.ab.anti_spam.ui.communityblocking.CommunityViewReport"
+        android:label="User Comments"
+        tools:layout="@layout/fragment_community_view_report" >
+        <argument
+            android:name="model"
+            app:argType="com.ab.anti_spam.models.CommunityBlockingModel" />
+        <action
+            android:id="@+id/action_communityViewReport_to_addCommentDialog"
+            app:destination="@id/addCommentDialog" />
+        <action
+            android:id="@+id/action_communityViewReport_to_viewCommentDialog"
+            app:destination="@id/viewCommentDialog" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/communityUserReportViewPager"
+        android:name="com.ab.anti_spam.ui.communityblocking.CommunityUserReportViewPager"
+        android:label="fragment_community_user_report_view_pager"
+        tools:layout="@layout/fragment_community_user_report_view_pager" />
+    <dialog
+        android:id="@+id/addCommentDialog"
+        android:name="com.ab.anti_spam.ui.communityblocking.AddCommentDialog"
+        android:label="fragment_add_comment_dialog"
+        tools:layout="@layout/fragment_add_comment_dialog" >
+        <argument
+            android:name="model"
+            app:argType="com.ab.anti_spam.models.CommunityBlockingModel" />
+    </dialog>
+    <dialog
+        android:id="@+id/viewCommentDialog"
+        android:name="com.ab.anti_spam.ui.communityblocking.ViewCommentDialog"
+        android:label="fragment_view_comment_dialog"
+        tools:layout="@layout/fragment_view_comment_dialog" >
+        <argument
+            android:name="commentsmodel"
+            app:argType="com.ab.anti_spam.models.CommunityBlockingCommentsModel" />
     </dialog>
 </navigation>

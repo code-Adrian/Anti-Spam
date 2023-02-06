@@ -16,10 +16,10 @@ data class CommunityBlockingModel(    var id: Long = 0,
     fun map(): Map<String, Any?> {
         return mapOf<String,Any?>(
             "id" to id,
-            "user_id" to user_Id,
+            "user_Id" to user_Id,
             "report_Description" to report_Description,
             "reported_phone_number" to reported_phone_number,
-            "risk_level" to risk_Level,
+            "risk_Level" to risk_Level,
             "country" to country,
             "user_comments" to user_comments,
         )

@@ -73,6 +73,15 @@
     <string name="no">No</string>
     <string name="add">Add</string>
     <string name="add_number_to_blacklist">Add number to blacklist?</string>
+    <string name="number">Number</string>
+    <string name="description">Description</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="delete_report">Delete Report</string>
+    <string name="edit_report">Edit Report</string>
+    <string name="close">Close</string>
+    <string name="error_number_not_associated">The reported number must be present in your call list in order to leave a comment on it.</string>
+    <string name="ok">OK</string>
+    <string name="you_can_only_comment_once_on_a_reported_number">You can only comment once on a reported number.</string>
 
     <string-array name="warning">
         <item>High</item>

@@ -13,7 +13,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:elevation="24dp"
         android:layout_marginBottom="10dp"
         android:id="@+id/user_report_comment_card"
@@ -33,6 +33,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/user"
                 />
 
@@ -42,8 +43,10 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/userIcon"
                 android:layout_marginStart="20dp"
-                android:textSize="18dp"
-                android:text="@{`Warning: ` +communitymodel.risk_Level}"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/blueish"
+                android:textSize="19dp"
+                android:text="@{communitymodel.risk_Level + ` Warning`}"
                 />
 
             <TextView
@@ -52,20 +55,33 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/userIcon"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:maxLength="35"
-                android:textSize="17dp"
-                android:text="@{communitymodel.comment_Description}"
+                android:textSize="18dp"
+                android:text=""
                 />
 
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="5dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
+                android:layout_alignTop="@+id/userIcon"
+                android:textStyle="bold"
                 android:textSize="14dp"
                 android:text="@{communitymodel.date_Posted}"
+                />
+
+            <ImageView
+                android:id="@+id/deleteComment"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/ic_delete_report"
                 />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

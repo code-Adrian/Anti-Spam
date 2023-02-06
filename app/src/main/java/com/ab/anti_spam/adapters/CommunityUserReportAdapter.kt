@@ -132,39 +132,26 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
         //Set colors to Dataset
         dataSet.colors = colors
 
-        //Checking types of comment feedbacks to apply same amount of entries.
-        if(goodCommentCount == 0F && mediumCommentCount > 0F && badCommentCount > 0F){
+
+        if(goodCommentCount > 0){
             entries.add(PieEntry(goodCommentCount, "Low"))
-            entries.add(PieEntry(mediumCommentCount, "Medium"))
             //Low
             colors.add(ColorTemplate.getHoloBlue())
+        }
+
+        if(mediumCommentCount > 0){
+            entries.add(PieEntry(mediumCommentCount, "Medium"))
             //Medium
             colors.add(ColorTemplate.LIBERTY_COLORS.get(1))
-        } else if(mediumCommentCount == 0F && goodCommentCount >0F && badCommentCount >0F){
-            entries.add(PieEntry(goodCommentCount, "Low"))
+        }
+
+        if(badCommentCount > 0){
             entries.add(PieEntry(badCommentCount, "High"))
-            //Low
-            colors.add(ColorTemplate.getHoloBlue())
             //High
             colors.add(ColorTemplate.LIBERTY_COLORS.get(4))
-        }else if(badCommentCount == 0f && goodCommentCount > 0F && mediumCommentCount > 0F){
-            entries.add(PieEntry(goodCommentCount, "Low"))
-            entries.add(PieEntry(mediumCommentCount, "Medium"))
-            //Low
-            colors.add(ColorTemplate.getHoloBlue())
-            //Medium
-            colors.add(ColorTemplate.LIBERTY_COLORS.get(1))
-        }else if(badCommentCount > 0F && goodCommentCount > 0F && mediumCommentCount >0F){
-            entries.add(PieEntry(goodCommentCount, "Low"))
-            entries.add(PieEntry(mediumCommentCount, "Medium"))
-            entries.add(PieEntry(badCommentCount, "High"))
-            //Low
-            colors.add(ColorTemplate.getHoloBlue())
-            //Medium
-            colors.add(ColorTemplate.LIBERTY_COLORS.get(1))
-            //High
-            colors.add(ColorTemplate.LIBERTY_COLORS.get(4))
-        }else if(badCommentCount == 0F && goodCommentCount == 0F && mediumCommentCount == 0F) {
+        }
+
+        if(badCommentCount == 0F && goodCommentCount == 0F && mediumCommentCount == 0F) {
             entries.add(PieEntry(1F, "No Comments Available"))
             //Low
             colors.add(ColorTemplate.getHoloBlue())
@@ -179,6 +166,13 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
             binding.pieChart.setCenterTextColor(Color.WHITE)
         }
 
+
+
+        if(entries.size == 1){
+            binding.pieChart.setHoleRadius(15f);
+            binding.pieChart.setTransparentCircleRadius(25f);
+        }
+
         //Apply dataSet to PieData
         val data = PieData(dataSet)
         //To append % symbol on value entries - https://github.com/PhilJay/MPAndroidChart/issues/2124
@@ -186,16 +180,21 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
         //Apply data to Pie chart.
         binding.pieChart.data = data
 
-        //Automatic highlight of the highest comment value.
-        if(goodCommentCount > badCommentCount && goodCommentCount > mediumCommentCount){
-            binding.pieChart.highlightValue(0F,0);
+
+        //Check if there are 3 entries
+        if(goodCommentCount > 0 && mediumCommentCount > 0 && badCommentCount > 0) {
+            //Automatic highlight of the highest comment value.
+            if (goodCommentCount > badCommentCount && goodCommentCount > mediumCommentCount) {
+                binding.pieChart.highlightValue(0F, 0);
+            }
+            if (mediumCommentCount > goodCommentCount && mediumCommentCount > badCommentCount) {
+                binding.pieChart.highlightValue(1F, 0);
+            }
+            if (badCommentCount > mediumCommentCount && badCommentCount > goodCommentCount) {
+                binding.pieChart.highlightValue(2F, 0);
+            }
         }
-        if(mediumCommentCount > goodCommentCount && mediumCommentCount > badCommentCount){
-            binding.pieChart.highlightValue(1F,0);
-        }
-        if(badCommentCount > mediumCommentCount && badCommentCount > goodCommentCount ){
-            binding.pieChart.highlightValue(2F,0);
-        }
+
 
         //Draw the pie chart.
         binding.pieChart.invalidate()

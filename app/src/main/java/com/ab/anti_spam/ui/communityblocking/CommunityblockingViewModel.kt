@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ab.anti_spam.firebase.FirebaseDBManager
+import com.ab.anti_spam.models.CommunityBlockingCommentsModel
 import com.ab.anti_spam.models.CommunityBlockingModel
-import com.google.firebase.auth.FirebaseUser
 
 class CommunityblockingViewModel : ViewModel() {
 
@@ -13,6 +13,12 @@ class CommunityblockingViewModel : ViewModel() {
     private val communityReportList = MutableLiveData<MutableList<CommunityBlockingModel>>()
     val observableCommunityReportList : LiveData<MutableList<CommunityBlockingModel>>
     get() = communityReportList
+
+    //Community report for comments
+    private val communityReportComments = MutableLiveData<CommunityBlockingModel?>()
+    val observableCommunityReportComments : MutableLiveData<CommunityBlockingModel?>
+        get() = communityReportComments
+
 
     //Personal Report List
     private val personalReportList = MutableLiveData<MutableList<CommunityBlockingModel>>()
@@ -38,6 +44,24 @@ fun createReport(model: CommunityBlockingModel,currentUserUID: String){
     }
 }
 
+    fun updateReport(model: CommunityBlockingModel,currentUserUID: String){
+        status.value = try{
+            FirebaseDBManager.updateCommunityReport(model,currentUserUID)
+            true
+        }catch (e:Exception){
+            false
+        }
+    }
+
+    fun updateCommunityReportComments(model: CommunityBlockingCommentsModel,currentUserUID: String,reportId: String,reportUID: String){
+        status.value = try{
+            FirebaseDBManager.updateCommunityReportComments(model,reportId,currentUserUID,reportUID,communityReportComments)
+            true
+        }catch (e:Exception){
+            false
+        }
+    }
+
     fun getRecent100UserReports(){
         status.value = try{
             FirebaseDBManager.getTop100CommunityReports(communityReportList)
@@ -46,6 +70,25 @@ fun createReport(model: CommunityBlockingModel,currentUserUID: String){
             false
         }
     }
+
+    fun getUserReportById(id: String){
+        status.value = try{
+            communityReportComments.value = null
+            FirebaseDBManager.getCommunityReportById(communityReportComments,id)
+            true
+        }catch (e:Exception){
+            false
+        }
+    }
+
+fun deleteComment(model: CommunityBlockingCommentsModel, reportUID: String,reportId: String){
+    status.value = try{
+        FirebaseDBManager.deleteComment(model,reportUID,reportId)
+        true
+    }catch (e:Exception){
+        false
+    }
+}
 
     fun deleteReport(model: CommunityBlockingModel,currentUserUID: String){
         status.value = try{
@@ -56,14 +99,7 @@ fun createReport(model: CommunityBlockingModel,currentUserUID: String){
         }
     }
 
-    fun updateReport(model: CommunityBlockingModel,currentUserUID: String){
-        status.value = try{
-            FirebaseDBManager.updateCommunityReport(model,currentUserUID)
-            true
-        }catch (e:Exception){
-            false
-        }
-    }
+
 
     fun getPersonalReports(currentUserUID : String){
         status.value = try{

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ab.anti_spam.R
 import com.ab.anti_spam.adapters.CallBlacklistAdapter
@@ -59,7 +60,9 @@ class CommunityUserReportViewPager : Fragment(),cardClickListener {
     }
 
     override fun onCardClick(model: CommunityBlockingModel) {
-        TODO("Not yet implemented")
+        val bundle = Bundle()
+        bundle.putParcelable("model",model)
+        findNavController().navigate(R.id.action_nav_community_blocking_to_communityViewReport,bundle)
     }
 
 }

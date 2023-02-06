@@ -39,7 +39,6 @@ class Communityblocking : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = activity?.application as Main
-
     }
 
     override fun onCreateView(
@@ -59,13 +58,19 @@ class Communityblocking : Fragment() {
 
         observer()
 //fragBinding.fab.setOnClickListener{
-//    val comments1 = CommunityBlockingCommentsModel(1,"","","High","")
-//    val comments2 = CommunityBlockingCommentsModel(2,"","","Medium","")
-//    val comments3 = CommunityBlockingCommentsModel(3,"","","Low","")
+//    val comments1 = CommunityBlockingCommentsModel(1,"123","Scammer dont trust this number","High","2022/05/0")
+//    val comments2 = CommunityBlockingCommentsModel(2,"456","Dont trust this number","Medium","2022/04/0")
+//    val comments3 = CommunityBlockingCommentsModel(3,"678","Its ok","Low","2022/03/02")
 //    var test = mutableListOf<CommunityBlockingCommentsModel>()
 //   test.add(comments1)
-  //  val model =  CommunityBlockingModel(genUID(),uid,"Scammer", "This scammer tried to scam me","0870991361","High","Ireland",test)
-//    communityViewModel.createReport(model,uid)
+//   test.add(comments1)
+//   test.add(comments1)
+//   test.add(comments2)
+//   test.add(comments2)
+//   test.add(comments3)
+//
+//    val model =  CommunityBlockingModel(genUID(),"123","This scammer tried to scam me","0870991361","High","Ireland",test)
+//    communityViewModel.createReport(model,"123")
 //    communityViewModel.getRecent100UserReports()
 //}
         tabLayoutSetup()
