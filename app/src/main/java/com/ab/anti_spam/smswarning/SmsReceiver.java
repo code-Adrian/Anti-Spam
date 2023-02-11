@@ -19,11 +19,11 @@ public class SmsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        if(intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")){
+        if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
             Bundle bundle = intent.getExtras();           //---get the SMS message passed in---
-            if (bundle != null){
+            if (bundle != null) {
                 //---retrieve the SMS message received---
-                try{
+                try {
                     SMSBlacklistStorage localStorage = new SMSBlacklistStorage(context);
                     ArrayList<SMSBlacklistModel> model = (ArrayList<SMSBlacklistModel>) localStorage.getAll();
 
@@ -31,39 +31,41 @@ public class SmsReceiver extends BroadcastReceiver {
                     ArrayList<String> regexes = new ArrayList<>();
 
                     //Sorting model & seperating keywords and regex into different arrays.
-                    for(int i =0; i < model.size(); i++) {
-                        if(model.get(i).getBy_keyword().equals(model.get(i).getBy_keyword())){
+                    for (int i = 0; i < model.size(); i++) {
+                        if (model.get(i).getBy_keyword().equals(model.get(i).getBy_keyword())) {
                             keywords.add(model.get(i).getBy_keyword().trim().toLowerCase());
                         }
-                        if(model.get(i).getBy_regex().equals(model.get(i).getBy_regex())){
+                        if (model.get(i).getBy_regex().equals(model.get(i).getBy_regex())) {
                             regexes.add(model.get(i).getBy_regex().trim());
                         }
                     }
 
-                        //Receiving SMS and detecting comparison to trigger warning...
+                    //Receiving SMS and detecting comparison to trigger warning...
                     if (intent.getAction().equals(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)) {
                         SmsMessage[] smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
                         for (SmsMessage message : smsMessages) {
 
                             //Chopping received SMS message for analysis.
                             String[] choppedMessage = message.getMessageBody().split(" ");
-                            for(int i =0; i < choppedMessage.length; i++){
+                            for (int i = 0; i < choppedMessage.length; i++) {
                                 String comparison = choppedMessage[i].toLowerCase();
 
                                 //Keywords
-                                for(int ii =0; ii < keywords.size(); ii++) {
-                                    if(keywords.get(ii).contains(comparison)){
+                                for (int ii = 0; ii < keywords.size(); ii++) {
+                                    if (comparison.trim().contains(keywords.get(ii).trim())) {
                                         //Trigger warning
-                                        Intent overlayintent = new Intent(context,overlayservice.class);
+                                        Intent overlayintent = new Intent(context, overlayservice.class);
                                         overlayintent.putExtra("msg_from", message.getDisplayOriginatingAddress());
                                         context.startService(new Intent(overlayintent));
+                                        abortBroadcast();
+
                                     }
                                 }
                                 //Regexes
-                                for(int iii =0; iii < regexes.size(); iii++) {
-                                    if(regexes.get(iii).matches(comparison)){
+                                for (int iii = 0; iii < regexes.size(); iii++) {
+                                    if (regexes.get(iii).matches(comparison)) {
                                         //Trigger warning
-                                        Intent overlayintent = new Intent(context,overlayservice.class);
+                                        Intent overlayintent = new Intent(context, overlayservice.class);
                                         overlayintent.putExtra("msg_from", message.getOriginatingAddress());
                                         context.startService(new Intent(overlayintent));
                                     }
@@ -72,12 +74,11 @@ public class SmsReceiver extends BroadcastReceiver {
                         }
                     }
 
-                    } catch (Exception e) {
+                } catch (Exception e) {
                     System.out.println(e);
                     e.printStackTrace();
                 }
             }
-            }
         }
     }
-
+}

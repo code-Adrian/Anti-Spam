@@ -10,19 +10,20 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.view.marginBottom
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ab.anti_spam.R
-import com.ab.anti_spam.adapters.*
-import com.ab.anti_spam.databinding.FragmentCommunityUserReportViewPagerBinding
+import com.ab.anti_spam.adapters.CommunityUserReportCommentsAdapter
+import com.ab.anti_spam.adapters.cardCommentClickListener
+import com.ab.anti_spam.adapters.deleteCommentClickListener
+import com.ab.anti_spam.databinding.FragmentCommunityViewPersonalReportBinding
 import com.ab.anti_spam.databinding.FragmentCommunityViewReportBinding
 import com.ab.anti_spam.main.Main
-import com.ab.anti_spam.models.ChooseNumberModel
 import com.ab.anti_spam.models.CommunityBlockingCommentsModel
 import com.ab.anti_spam.models.CommunityBlockingModel
 import com.ab.anti_spam.ui.auth.LoggedInViewModel
@@ -33,20 +34,17 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
-class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentClickListener {
+class CommunityViewPersonalReport : Fragment(), cardCommentClickListener, deleteCommentClickListener {
+
 
     lateinit var app: Main
-    private var _fragBinding: FragmentCommunityViewReportBinding? = null
+    private var _fragBinding: FragmentCommunityViewPersonalReportBinding? = null
     private val fragBinding get() = _fragBinding!!
     private val communityViewModel: CommunityblockingViewModel by activityViewModels()
     lateinit var adapter: CommunityUserReportCommentsAdapter
     private lateinit var model: CommunityBlockingModel
     private var pieHeight : Int = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,15 +55,13 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         if (model != null) {
             this.model = model
         }
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        _fragBinding = FragmentCommunityViewReportBinding.inflate(inflater, container, false)
+        _fragBinding = FragmentCommunityViewPersonalReportBinding.inflate(inflater, container, false)
         val root = fragBinding.root
 
         pieHeight = fragBinding.pieChart.layoutParams.height
@@ -73,7 +69,7 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         setupMenu()
 
         renderRecyclerView()
-
+        fragmentResultListener()
 
 
         setupPieChart(this.model)
@@ -84,6 +80,9 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
 
         return root
     }
+
+
+
 
     private fun renderRecyclerView(){
         fragBinding.commentRecyclerview.layoutManager = LinearLayoutManager(activity)
@@ -96,37 +95,6 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         }
         adapter = fragBinding.commentRecyclerview.adapter as CommunityUserReportCommentsAdapter
     }
-
-    private fun renderRecyclerViewAfterAddingComment(){
-        communityViewModel.getUserReportById(model.id.toString())
-        communityViewModel.observableCommunityReportComments.observe(viewLifecycleOwner) { it ->
-            it.let {
-                if (it != null) {
-                    if (it.user_comments.size > 0) {
-
-                        val currentUID = communityViewModel.UID.value
-
-                        if(currentUID != null) {
-                            fragBinding.commentRecyclerview.layoutManager =
-                                LinearLayoutManager(activity)
-                            fragBinding.commentRecyclerview.adapter =
-                                CommunityUserReportCommentsAdapter(
-                                    it.user_comments as ArrayList<CommunityBlockingCommentsModel>, this,this, currentUID)
-                        }
-
-                        adapter = fragBinding.commentRecyclerview.adapter as CommunityUserReportCommentsAdapter
-                        setupPieChart(it)
-                        fragBinding.commentRecyclerview.visibility = View.VISIBLE
-                        fragBinding.pieChart.legend.position = Legend.LegendPosition.RIGHT_OF_CHART
-                        fragBinding.pieChart.legend.textSize = 15F
-                        fragBinding.pieChart.setCenterTextSize(13f)
-                        fragBinding.pieChart.layoutParams.height = pieHeight
-                    }
-                }
-            }
-        }
-    }
-
 
     private fun setupPieChart(model: CommunityBlockingModel){
 
@@ -284,7 +252,7 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
             fragBinding.pieChart.legend.textSize = 19F
             fragBinding.pieChart.setCenterTextSize(18.5F)
             fragBinding.pieChart.layoutParams.height = Resources.getSystem().displayMetrics.heightPixels /2
-           // val margin = fragBinding.pieChart.layoutParams as ViewGroup.MarginLayoutParams
+            // val margin = fragBinding.pieChart.layoutParams as ViewGroup.MarginLayoutParams
             //margin.bottomMargin = 200
         }else{
             fragBinding.pieChart.legend.position = Legend.LegendPosition.RIGHT_OF_CHART
@@ -306,15 +274,22 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
                 if (menu is MenuBuilder){ (menu as MenuBuilder).setOptionalIconsVisible(true)}
 
                 menuInflater.inflate(R.menu.community_view_report_menu,menu)
-                menu.findItem(R.id.delete_report).setVisible(false)
-                menu.findItem(R.id.edit_report).setVisible(false)
+                menu.findItem(R.id.add_comment).setVisible(false)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
 
                 when(menuItem.itemId){
-                    R.id.add_comment ->{
-                        addComment()
+                    R.id.edit_report -> {
+                        val bundle = Bundle()
+                        bundle.putParcelable("model", model)
+                        val editUserReport = EditUserReportDialog()
+                        editUserReport.arguments = bundle
+                        editUserReport.show(parentFragmentManager,null)
+
+                    }
+                    R.id.delete_report -> {
+                        DeleteReportConfirmDialog().show(parentFragmentManager,null)
                     }
                 }
 
@@ -325,56 +300,28 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    fun addComment(){
-            if(checkIfNumberAssociated(model.reported_phone_number.replace("+","").trim()) == true){
-
-                if(checkCommentedAlready() == false) {
-                    val bundle = Bundle()
-                    bundle.putParcelable("model", model)
-                    val addCommentDialog = AddCommentDialog()
-                    addCommentDialog.arguments = bundle
-                    findNavController().navigate(R.id.action_communityViewReport_to_addCommentDialog, bundle)
-                    renderRecyclerViewAfterAddingComment()
-                }else{
-                    AlreadyCommentedErrorDialog().show(parentFragmentManager,null)
-                }
-
-            }else{
-                AddCommentErrorDialog().show(parentFragmentManager,null)
-            }
-
-    }
-
-
-
-    @SuppressLint("Range")
-    fun checkIfNumberAssociated(report_number: String) : Boolean{
-        val callLogUri = CallLog.Calls.CONTENT_URI
-        val variables = arrayOf(CallLog.Calls.NUMBER)
-
-        val cursor = context?.contentResolver?.query(callLogUri,variables,null,null, CallLog.Calls.DEFAULT_SORT_ORDER)
-
-        if(cursor != null && cursor.count > 0){
-            while (cursor.moveToNext()){
-                val number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)).replace("+","").trim()
-                if(number.equals(report_number)){
-                    return true
-                }
-            }
-            cursor.close()
-        }
-        return false
-    }
-
-    fun checkCommentedAlready() : Boolean{
-        val currentUID : String? = communityViewModel.UID.value
-
-        for(i in model.user_comments){
-            if(currentUID!!.trim().equals(i.user_Id_comment.toString().trim())){
-                return true
+    //Dialog callback listeners
+    fun fragmentResultListener(){
+        //Editing
+        setFragmentResultListener("model") { _, bundleData ->
+            val updatedModel: CommunityBlockingModel? = bundleData.getParcelable("model")
+            if (updatedModel != null) {
+                this.model.country = updatedModel.country
+                this.model.risk_Level = updatedModel.risk_Level
+                this.model.report_Description = updatedModel.report_Description
+                setupPieChart(this.model)
+                fragBinding.description.setText(this.model.report_Description)
             }
         }
-        return false
+        //Delete
+        setFragmentResultListener("delete"){_, bundleData ->
+            val confirm = bundleData.getString("delete").toString()
+
+            if(confirm.equals("delete")){
+                communityViewModel.deleteReport(this.model,this.model.user_Id)
+                findNavController().popBackStack()
+            }
+        }
     }
 
     override fun onCardClick(model: CommunityBlockingCommentsModel) {
@@ -383,13 +330,11 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         val viewCommentDialog = ViewCommentDialog()
         viewCommentDialog.arguments = bundle
         viewCommentDialog.show(parentFragmentManager,null)
-        //findNavController().navigate(R.id.action_communityViewReport_to_viewCommentDialog,bundle)
     }
 
     override fun onDeleteClick(model: CommunityBlockingCommentsModel) {
         communityViewModel.deleteComment(model,this.model.user_Id,this.model.id.toString())
         adapter.removeItem(model)
     }
-
 
 }

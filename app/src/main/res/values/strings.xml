@@ -82,6 +82,11 @@
     <string name="error_number_not_associated">The reported number must be present in your call list in order to leave a comment on it.</string>
     <string name="ok">OK</string>
     <string name="you_can_only_comment_once_on_a_reported_number">You can only comment once on a reported number.</string>
+    <string name="edit">Edit</string>
+    <string name="number_already_reported">This number has been reported by another user, would you like to view it?</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="delete_report_confirm_text">Are you sure you want to delete the current report? Changes cannot be undone.</string>
 
     <string-array name="warning">
         <item>High</item>

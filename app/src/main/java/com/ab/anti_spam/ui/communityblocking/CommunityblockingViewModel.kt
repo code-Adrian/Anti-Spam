@@ -19,6 +19,14 @@ class CommunityblockingViewModel : ViewModel() {
     val observableCommunityReportComments : MutableLiveData<CommunityBlockingModel?>
         get() = communityReportComments
 
+   // For checking if report exists already.
+    private val communityReportExists = MutableLiveData<CommunityBlockingModel?>()
+    val observableCommunityReportExists : MutableLiveData<CommunityBlockingModel?>
+    get() = communityReportExists
+
+    private val checkNumberStatus =  MutableLiveData<Boolean>()
+    val observableCheckStatus: LiveData<Boolean>
+        get() = checkNumberStatus
 
     //Personal Report List
     private val personalReportList = MutableLiveData<MutableList<CommunityBlockingModel>>()
@@ -35,7 +43,7 @@ class CommunityblockingViewModel : ViewModel() {
    get() = status
 
 
-fun createReport(model: CommunityBlockingModel,currentUserUID: String){
+fun createReport(model: CommunityBlockingModel,currentUserUID: String,){
     status.value = try{
         FirebaseDBManager.createCommunityReport(model,currentUserUID)
         true
@@ -80,6 +88,19 @@ fun createReport(model: CommunityBlockingModel,currentUserUID: String){
             false
         }
     }
+
+    fun getUserReportByNumber(number: String) {
+             //communityReportExists.value = null
+             FirebaseDBManager.getCommunityReportByNumber(number,{
+                 if(it != null){
+                     communityReportExists.value = it
+                 }else{
+                     communityReportExists.value = null
+                 }
+
+    })
+    }
+
 
 fun deleteComment(model: CommunityBlockingCommentsModel, reportUID: String,reportId: String){
     status.value = try{

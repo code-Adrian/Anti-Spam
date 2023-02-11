@@ -63,6 +63,7 @@ class AddBlacklistQuestionDialog : DialogFragment() {
         val root = fragBinding.root
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         fragBinding.dontAdd.setBackgroundColor(ColorTemplate.COLORFUL_COLORS[0])
         fragBinding.add.setBackgroundColor(ColorTemplate.COLORFUL_COLORS[3])
 

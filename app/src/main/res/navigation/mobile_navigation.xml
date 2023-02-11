@@ -67,6 +67,9 @@
         <action
             android:id="@+id/action_nav_community_blocking_to_communityViewReport"
             app:destination="@id/communityViewReport" />
+        <action
+            android:id="@+id/action_nav_community_blocking_to_communityViewPersonalReport"
+            app:destination="@id/communityViewPersonalReport" />
     </fragment>
     <fragment
         android:id="@+id/nav_learnscampatterns"
@@ -206,7 +209,7 @@
     <fragment
         android:id="@+id/communityViewReport"
         android:name="com.ab.anti_spam.ui.communityblocking.CommunityViewReport"
-        android:label="User Comments"
+        android:label="Report Comments"
         tools:layout="@layout/fragment_community_view_report" >
         <argument
             android:name="model"
@@ -241,5 +244,36 @@
         <argument
             android:name="commentsmodel"
             app:argType="com.ab.anti_spam.models.CommunityBlockingCommentsModel" />
+    </dialog>
+    <fragment
+
+        android:id="@+id/communityViewPersonalReport"
+        android:name="com.ab.anti_spam.ui.communityblocking.CommunityViewPersonalReport"
+        android:label="Report Comments"
+        tools:layout="@layout/fragment_community_view_personal_report" >
+        <action
+            android:id="@+id/action_communityViewPersonalReport_to_editUserReportDialog"
+            app:destination="@id/editUserReportDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/editUserReportDialog"
+        android:name="com.ab.anti_spam.ui.communityblocking.EditUserReportDialog"
+        android:label="fragment_edit_user_report_dialog"
+        tools:layout="@layout/fragment_edit_user_report_dialog" >
+        <argument
+            android:name="model"
+            app:argType="com.ab.anti_spam.models.CommunityBlockingModel" />
+        <action
+            android:id="@+id/action_editUserReportDialog_to_communityViewPersonalReport"
+            app:destination="@id/communityViewPersonalReport" />
+    </dialog>
+    <dialog
+        android:id="@+id/reportExistsVisitDialog"
+        android:name="com.ab.anti_spam.ui.communityblocking.ReportExistsVisitDialog"
+        android:label="fragment_report_exists_visit_dialog"
+        tools:layout="@layout/fragment_report_exists_visit_dialog" >
+        <argument
+            android:name="model"
+            app:argType="com.ab.anti_spam.models.CommunityBlockingModel" />
     </dialog>
 </navigation>

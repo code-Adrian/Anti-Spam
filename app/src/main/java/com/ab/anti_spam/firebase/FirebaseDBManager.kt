@@ -147,6 +147,46 @@ object FirebaseDBManager : CommunityDBInterface{
         })
     }
 
+    override fun getCommunityReportByNumber(phoneNumber: String,callback: (CommunityBlockingModel?) -> Unit) {
+        val database: DatabaseReference = FirebaseDatabase.getInstance().reference.child("community-reports")
+
+        database.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(data: DataSnapshot) {
+                val localModel = ArrayList<CommunityBlockingModel>()
+                for(data:DataSnapshot in data.children){
+                    for(data in data.children) {
+                        if(data.child("reported_phone_number").getValue().toString().equals(phoneNumber)) {
+
+                            val id = (data.child("id").getValue().toString().toLong())
+                            val user_id = (data.child("user_Id").getValue().toString())
+                            val report_Description =
+                                (data.child("report_Description").getValue().toString())
+                            val reported_phone_number =
+                                (data.child("reported_phone_number").getValue().toString())
+                            val risk_level = (data.child("risk_Level").getValue().toString())
+                            val country = (data.child("country").getValue().toString())
+                            val user_comments = data.child("user_comments").getValue(object : GenericTypeIndicator<MutableList<CommunityBlockingCommentsModel>>() {})
+                            var comments = mutableListOf<CommunityBlockingCommentsModel>()
+                            if (user_comments != null) {
+                                comments = user_comments
+                            }
+                            val foundModel = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, comments)
+
+                            localModel.add(foundModel)
+                        }
+                    }
+                }
+                if(localModel.size == 1){
+                    callback(localModel[0])
+                }else{
+                    callback(null)
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
     override fun updateCommunityReportComments(model: CommunityBlockingCommentsModel, reportId: String, currentUserUID: String,reportUID: String,updateModel: MutableLiveData<CommunityBlockingModel?>) {
         val database: DatabaseReference = FirebaseDatabase.getInstance().reference.child("community-reports")
         database.addListenerForSingleValueEvent(object: ValueEventListener {

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical"
+    tools:context=".ui.communityblocking.ReportExistsVisitDialog">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_error"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ImageView
+            android:id="@+id/goBack"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/icon_go_back"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="1dp"
+            />
+
+    <ImageView
+        android:id="@+id/cancel"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/icon_cancel" />
+    </RelativeLayout>
+    <View
+        android:id="@+id/seperator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/blueish"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/number_already_reported"
+        android:textSize="18dp"
+        android:layout_marginTop="15dp"
+        />
+
+    <Button
+        android:id="@+id/viewReport"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:text="View Report"
+        android:layout_gravity="center"
+        >
+    </Button>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

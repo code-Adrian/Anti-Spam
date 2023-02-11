@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ab.anti_spam.R
@@ -17,6 +18,7 @@ import com.ab.anti_spam.adapters.ReportChooseNumberAdapter
 import com.ab.anti_spam.adapters.chooseNumberListener
 import com.ab.anti_spam.databinding.FragmentAddUserReportChooseNumberDialogBinding
 import com.ab.anti_spam.models.ChooseNumberModel
+import com.ab.anti_spam.models.CommunityBlockingModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,10 +27,10 @@ class AddUserReportChooseNumberDialog : DialogFragment(),chooseNumberListener {
     private var _fragBinding: FragmentAddUserReportChooseNumberDialogBinding? = null
     private val fragBinding get() = _fragBinding!!
     lateinit var adapter: ReportChooseNumberAdapter
-
+    private val communityViewModel: CommunityblockingViewModel by activityViewModels()
+    private var globalModelSelect: ChooseNumberModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -39,8 +41,9 @@ class AddUserReportChooseNumberDialog : DialogFragment(),chooseNumberListener {
         _fragBinding = FragmentAddUserReportChooseNumberDialogBinding.inflate(inflater, container, false)
         val root = fragBinding.root
         root.minimumWidth = Resources.getSystem().displayMetrics.widthPixels/ 2 + 300
-
-
+        //Resetin
+        communityViewModel.observableCommunityReportExists.value = null
+        observer()
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         renderRecyclerView(getRecentCalls())
@@ -91,11 +94,39 @@ class AddUserReportChooseNumberDialog : DialogFragment(),chooseNumberListener {
     }
 
     override fun onChoose(model: ChooseNumberModel) {
+        //Updates the global variable to the chosen model.
+        this.globalModelSelect = model
+        //Triggers firebase to get the report and get a callback which updates the observer() function.
+        communityViewModel.getUserReportByNumber(model.number)
+    }
+
+    fun observer(){
+        communityViewModel.observableCommunityReportExists.observe(viewLifecycleOwner,{
+            if(it != null){
+                //Display dialog that tells the user the report already exists and if the user wants to view the existing report
+                alreadyExists(it)
+
+            }else{
+                globalModelSelect?.let { next(it) }
+            }
+        })
+    }
+
+    fun alreadyExists(model: CommunityBlockingModel){
+        this.dismiss()
+        val bundle = Bundle()
+        bundle.putParcelable("model",model)
+        val reportExistsVisitDialog = ReportExistsVisitDialog()
+        reportExistsVisitDialog.arguments = bundle
+        reportExistsVisitDialog.show(parentFragmentManager,null)
+
+    }
+
+    fun next(model: ChooseNumberModel){
         this.dismiss()
         val bundle = Bundle()
         bundle.putParcelable("model",model)
         findNavController().navigate(R.id.action_nav_community_blocking_to_addUserReportDialog2,bundle)
     }
-
 
 }

@@ -33,7 +33,7 @@ class CommunityUserReportViewPager : Fragment(),cardClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _fragBinding = FragmentCommunityUserReportViewPagerBinding.inflate(inflater, container, false)
         val root = fragBinding.root
