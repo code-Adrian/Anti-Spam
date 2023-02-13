@@ -1,5 +1,6 @@
 package com.ab.anti_spam.ui.communityblocking
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -29,6 +30,8 @@ import com.ab.anti_spam.ui.auth.LoggedInViewModel
 import com.ab.anti_spam.ui.callblacklist.CallblacklistViewModel
 import com.ab.anti_spam.ui.callblacklist.OptionsDialog
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddUserReportDialog : DialogFragment() {
 
@@ -82,6 +85,7 @@ class AddUserReportDialog : DialogFragment() {
         })
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun addReport(){
         fragBinding.AddReport.setOnClickListener{
             val country = fragBinding.countrySelect.text.toString()
@@ -109,8 +113,10 @@ class AddUserReportDialog : DialogFragment() {
             if(country.isNotEmpty() && warning.isNotEmpty() && description.isNotEmpty() && description.length > 5){
 
                 val emptyCommentsModel = mutableListOf<CommunityBlockingCommentsModel>()
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+                val date = dateFormat.format(Date())
 
-                val model =  CommunityBlockingModel(genUID(),uid, description,numberReported, warning,countryReported,emptyCommentsModel)
+                val model =  CommunityBlockingModel(genUID(),uid, description,numberReported, warning,countryReported,date,emptyCommentsModel)
 
                 dismiss()
                 val bundle = Bundle()
@@ -123,6 +129,7 @@ class AddUserReportDialog : DialogFragment() {
             }
         }
     }
+
 
 
     fun navigationListener(){
