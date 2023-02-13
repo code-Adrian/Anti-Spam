@@ -32,6 +32,35 @@
         android:layout_marginBottom="25dp"
         />
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        >
+        <TextView
+            android:id="@+id/country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22dp"
+            android:text="Country"
+            android:layout_gravity="start"
+            />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="12/02/2023"
+            android:textAlignment="textEnd"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"

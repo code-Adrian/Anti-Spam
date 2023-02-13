@@ -79,8 +79,8 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         setupPieChart(this.model)
         fragBinding.header.setText(model.reported_phone_number)
         fragBinding.description.setText(model.report_Description)
-
-
+        fragBinding.date.setText(model.date)
+        fragBinding.country.setText(model.country)
 
         return root
     }
@@ -171,6 +171,10 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         }
 
 
+        val colorLow = ColorTemplate.getHoloBlue()
+        val colorMedium = Color.argb(90, 255, 165, 0)
+        val colorHigh = Color.argb(90, 255, 0, 0)
+
         //No description
         fragBinding.pieChart.description.isEnabled = false
         // binding.pieChart.legend.isEnabled = false
@@ -219,19 +223,21 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         if(badCommentCount > 0){
             entries.add(PieEntry(badCommentCount, "High"))
             //High
-            colors.add(ColorTemplate.LIBERTY_COLORS.get(4))
+            colors.add(colorHigh)
+
         }
 
         if(mediumCommentCount > 0){
             entries.add(PieEntry(mediumCommentCount, "Medium"))
             //Medium
-            colors.add(ColorTemplate.LIBERTY_COLORS.get(1))
+            colors.add(colorMedium)
+
         }
 
         if(goodCommentCount > 0){
             entries.add(PieEntry(goodCommentCount, "Low"))
             //Low
-            colors.add(ColorTemplate.getHoloBlue())
+            colors.add(colorLow)
         }
 
         if(badCommentCount == 0F && goodCommentCount == 0F && mediumCommentCount == 0F) {
@@ -262,17 +268,22 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
         //Apply data to Pie chart.
         fragBinding.pieChart.data = data
 
+        //Setting value lines
+        dataSet.valueLinePart1Length = 0.6F
+        dataSet.valueLinePart2Length  = 0.6F
+        dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+
         //Check if there are 3 entries
         if(entries.size == 3) {
             //Automatic highlight of the highest comment value.
             if (goodCommentCount > badCommentCount && goodCommentCount > mediumCommentCount) {
-                fragBinding.pieChart.highlightValue(0F, 0);
+                fragBinding.pieChart.highlightValue(2F, 0);
             }
             if (mediumCommentCount > goodCommentCount && mediumCommentCount > badCommentCount) {
                 fragBinding.pieChart.highlightValue(1F, 0);
             }
             if (badCommentCount > mediumCommentCount && badCommentCount > goodCommentCount) {
-                fragBinding.pieChart.highlightValue(2F, 0);
+                fragBinding.pieChart.highlightValue(0F, 0);
             }
         }
 

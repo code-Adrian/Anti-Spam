@@ -56,6 +56,7 @@ class ReportExistsVisitDialog : DialogFragment() {
 
         }
         fragBinding.goBack.setOnClickListener{
+            this.dismiss()
             val chooseNumberDialogDialog = AddUserReportChooseNumberDialog()
             chooseNumberDialogDialog.show(parentFragmentManager,null)
         }

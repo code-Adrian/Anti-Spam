@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,8 +44,12 @@ class PersonalUserReportViewPager : Fragment(), cardClickListener {
         _fragBinding = FragmentPersonalUserReportViewPagerBinding.inflate(inflater, container, false)
         val root = fragBinding.root
 
+        fragBinding.loading.visibility = View.VISIBLE
+
+        clearEmptyReportsLayout()
         loadUserAndReports()
         addUserReportListener()
+
         return root
     }
 
@@ -65,9 +70,15 @@ class PersonalUserReportViewPager : Fragment(), cardClickListener {
     }
 
     private fun renderRecyclerView(model: ArrayList<CommunityBlockingModel>){
+        fragBinding.loading.visibility = View.INVISIBLE
         fragBinding.personalCommunityRecyclerview.layoutManager = LinearLayoutManager(activity)
         fragBinding.personalCommunityRecyclerview.adapter = CommunityUserReportAdapter(model as ArrayList<CommunityBlockingModel>,this)
         adapter = fragBinding.personalCommunityRecyclerview.adapter as CommunityUserReportAdapter
+        if(model.size > 0){
+            clearEmptyReportsLayout()
+        }else{
+            addEmptyReportsLayout()
+        }
     }
 
 
@@ -80,6 +91,16 @@ class PersonalUserReportViewPager : Fragment(), cardClickListener {
             }
         })
     }
+
+    fun clearEmptyReportsLayout(){
+        fragBinding.communityIcon.isVisible = false
+        fragBinding.emptyCommunityText.isVisible = false
+    }
+    fun addEmptyReportsLayout(){
+        fragBinding.communityIcon.isVisible = true
+        fragBinding.emptyCommunityText.isVisible = true
+    }
+
 
     override fun onCardClick(model: CommunityBlockingModel) {
         val bundle = Bundle()

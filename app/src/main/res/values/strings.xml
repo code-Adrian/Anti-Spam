@@ -87,6 +87,7 @@
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="delete_report_confirm_text">Are you sure you want to delete the current report? Changes cannot be undone.</string>
+    <string name="personal_view_pager_empty_text">Your personal reports seem to be empty. Tap the + button to report a phone number.</string>
 
     <string-array name="warning">
         <item>High</item>

@@ -42,12 +42,13 @@ object FirebaseDBManager : CommunityDBInterface{
                                 (data.child("reported_phone_number").getValue().toString())
                             val risk_level = (data.child("risk_Level").getValue().toString())
                             val country = (data.child("country").getValue().toString())
+                            val date = (data.child("date").getValue().toString())
                             val user_comments = data.child("user_comments").getValue(object : GenericTypeIndicator<MutableList<CommunityBlockingCommentsModel>>() {})
                             var comments = mutableListOf<CommunityBlockingCommentsModel>()
                             if (user_comments != null) {
                                 comments = user_comments
                             }
-                            val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, comments)
+                            val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country,date, comments)
 
                             localModel.add(model)
                         }
@@ -93,13 +94,14 @@ object FirebaseDBManager : CommunityDBInterface{
                             val reported_phone_number = (data.child("reported_phone_number").getValue().toString())
                             val risk_level = (data.child("risk_Level").getValue().toString())
                             val country = (data.child("country").getValue().toString())
+                            val date = (data.child("date").getValue().toString())
                             val user_comments = data.child("user_comments").getValue(object : GenericTypeIndicator<MutableList<CommunityBlockingCommentsModel>>() {})
 
                             var comments = mutableListOf<CommunityBlockingCommentsModel>()
                             if (user_comments != null) {
                                 comments = user_comments
                             }
-                            val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, comments)
+                            val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country,date, comments)
 
                             localModel.add(model)
                         }
@@ -130,12 +132,13 @@ object FirebaseDBManager : CommunityDBInterface{
                                 (data.child("reported_phone_number").getValue().toString())
                             val risk_level = (data.child("risk_Level").getValue().toString())
                             val country = (data.child("country").getValue().toString())
+                            val date = (data.child("date").getValue().toString())
                             val user_comments = data.child("user_comments").getValue(object : GenericTypeIndicator<MutableList<CommunityBlockingCommentsModel>>() {})
                             var comments = mutableListOf<CommunityBlockingCommentsModel>()
                             if (user_comments != null) {
                                 comments = user_comments
                             }
-                            val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, comments)
+                            val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country,date, comments)
 
                             localModel.add(model)
                         }
@@ -165,12 +168,13 @@ object FirebaseDBManager : CommunityDBInterface{
                                 (data.child("reported_phone_number").getValue().toString())
                             val risk_level = (data.child("risk_Level").getValue().toString())
                             val country = (data.child("country").getValue().toString())
+                            val date = (data.child("date").getValue().toString())
                             val user_comments = data.child("user_comments").getValue(object : GenericTypeIndicator<MutableList<CommunityBlockingCommentsModel>>() {})
                             var comments = mutableListOf<CommunityBlockingCommentsModel>()
                             if (user_comments != null) {
                                 comments = user_comments
                             }
-                            val foundModel = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, comments)
+                            val foundModel = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country,date ,comments)
 
                             localModel.add(foundModel)
                         }
@@ -205,12 +209,13 @@ object FirebaseDBManager : CommunityDBInterface{
                                 (data.child("reported_phone_number").getValue().toString())
                             val risk_level = (data.child("risk_Level").getValue().toString())
                             val country = (data.child("country").getValue().toString())
+                            val date = (data.child("date").getValue().toString())
                             val user_comments = data.child("user_comments").getValue(object : GenericTypeIndicator<MutableList<CommunityBlockingCommentsModel>>() {})
                             var comments = mutableListOf<CommunityBlockingCommentsModel>()
                             if (user_comments != null) {
                                 comments = user_comments
                             }
-                            val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, comments)
+                            val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country,date, comments)
 
                             localModel.add(model)
                         }
@@ -253,12 +258,13 @@ object FirebaseDBManager : CommunityDBInterface{
                             (data.child("reported_phone_number").getValue().toString())
                         val risk_level = (data.child("risk_Level").getValue().toString())
                         val country = (data.child("country").getValue().toString())
+                        val date = (data.child("date").getValue().toString())
                         val user_comments = data.child("user_comments").getValue(object : GenericTypeIndicator<MutableList<CommunityBlockingCommentsModel>>() {})
                         var comments = mutableListOf<CommunityBlockingCommentsModel>()
                         if (user_comments != null) {
                             comments = user_comments
                         }
-                        val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, comments)
+                        val model = CommunityBlockingModel(id, user_id, report_Description, reported_phone_number, risk_level, country, date,comments)
 
                         localModel.add(model)
                     }

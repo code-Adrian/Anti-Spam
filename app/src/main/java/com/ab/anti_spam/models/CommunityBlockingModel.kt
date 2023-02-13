@@ -11,6 +11,7 @@ data class CommunityBlockingModel(    var id: Long = 0,
                                       var reported_phone_number: String = "",
                                       var risk_Level: String = "",
                                       var country: String = "",
+                                      var date: String = "",
                                       var user_comments: MutableList<CommunityBlockingCommentsModel>) : Parcelable {
     @Exclude
     fun map(): Map<String, Any?> {
@@ -21,6 +22,7 @@ data class CommunityBlockingModel(    var id: Long = 0,
             "reported_phone_number" to reported_phone_number,
             "risk_Level" to risk_Level,
             "country" to country,
+            "date" to date,
             "user_comments" to user_comments,
         )
     }

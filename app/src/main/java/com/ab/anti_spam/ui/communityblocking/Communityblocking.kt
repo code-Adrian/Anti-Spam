@@ -52,27 +52,7 @@ class Communityblocking : Fragment() {
         tabLayout = fragBinding.tabLayout
         viewPager = fragBinding.viewPager
 
-        fragBinding.loading.visibility = View.VISIBLE
-        fragBinding.communityIcon.isVisible = false
-        fragBinding.emptyCommunityText.isVisible = false
 
-        observer()
-//fragBinding.fab.setOnClickListener{
-//    val comments1 = CommunityBlockingCommentsModel(1,"123","Scammer dont trust this number","High","2022/05/0")
-//    val comments2 = CommunityBlockingCommentsModel(2,"456","Dont trust this number","Medium","2022/04/0")
-//    val comments3 = CommunityBlockingCommentsModel(3,"678","Its ok","Low","2022/03/02")
-//    var test = mutableListOf<CommunityBlockingCommentsModel>()
-//   test.add(comments1)
-//   test.add(comments1)
-//   test.add(comments1)
-//   test.add(comments2)
-//   test.add(comments2)
-//   test.add(comments3)
-//
-//    val model =  CommunityBlockingModel(genUID(),"123","This scammer tried to scam me","0870991361","High","Ireland",test)
-//    communityViewModel.createReport(model,"123")
-//    communityViewModel.getRecent100UserReports()
-//}
         tabLayoutSetup()
 
         return root
@@ -83,22 +63,6 @@ class Communityblocking : Fragment() {
         uid=it.uid
         communityViewModel.UID.value = uid
     })
-    }
-
-    fun observer(){
-        communityViewModel.observableCommunityReportList.observe(viewLifecycleOwner,{it->
-            it.let {
-                fragBinding.loading.visibility = View.INVISIBLE
-                if(it.size == 0) {
-                    fragBinding.communityIcon.isVisible = true
-                    fragBinding.emptyCommunityText.isVisible = true
-                }
-            }
-
-        })
-    }
-    private fun emptyCommunityLayout(){
-
     }
 
     private fun tabLayoutSetup(){

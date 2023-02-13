@@ -40,11 +40,18 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
         binding.root.tag = model
         binding.communitymodel = model
 
+        binding.countryText.setText(shortenCountry(model.country))
 
         //Comment feedback variables
         var goodCommentCount: Float = 0F
         var mediumCommentCount: Float = 0F
         var badCommentCount: Float = 0F
+
+
+
+        val colorLow = ColorTemplate.getHoloBlue()
+        val colorMedium = Color.argb(90, 255, 165, 0)
+        val colorHigh = Color.argb(90, 255, 0, 0)
 
 
         //Incrementing feedback variables based on comment warning levels.
@@ -136,25 +143,25 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
         if(goodCommentCount > 0){
             entries.add(PieEntry(goodCommentCount, "Low"))
             //Low
-            colors.add(ColorTemplate.getHoloBlue())
+            colors.add(colorLow)
         }
 
         if(mediumCommentCount > 0){
             entries.add(PieEntry(mediumCommentCount, "Medium"))
             //Medium
-            colors.add(ColorTemplate.LIBERTY_COLORS.get(1))
+            colors.add(colorMedium)
         }
 
         if(badCommentCount > 0){
             entries.add(PieEntry(badCommentCount, "High"))
             //High
-            colors.add(ColorTemplate.LIBERTY_COLORS.get(4))
+            colors.add(colorHigh)
         }
 
         if(badCommentCount == 0F && goodCommentCount == 0F && mediumCommentCount == 0F) {
             entries.add(PieEntry(1F, "No Comments Available"))
             //Low
-            colors.add(ColorTemplate.getHoloBlue())
+            colors.add(colorLow)
             binding.pieChart.isDrawHoleEnabled = false
             binding.pieChart.setDrawCenterText(true)
             binding.pieChart.setCenterTextSize(13f)
@@ -165,8 +172,6 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
             binding.pieChart.centerText = "No\nComments"
             binding.pieChart.setCenterTextColor(Color.WHITE)
         }
-
-
 
         if(entries.size == 1){
             binding.pieChart.setHoleRadius(15f);
@@ -180,7 +185,11 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
         //Apply data to Pie chart.
         binding.pieChart.data = data
 
+        //Setting value lines
+        dataSet.valueLinePart1Length = 0.2F
+        dataSet.valueLinePart2Length  = 0.4F
 
+        dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         //Check if there are 3 entries
         if(goodCommentCount > 0 && mediumCommentCount > 0 && badCommentCount > 0) {
             //Automatic highlight of the highest comment value.
@@ -195,9 +204,16 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
             }
         }
 
-
         //Draw the pie chart.
         binding.pieChart.invalidate()
     }
 }
+
+    fun shortenCountry(country: String): String{
+        return if(country.length > 12){
+            "${country.substring(0,11)}..."
+        }else{
+            country
+        }
+    }
 }
