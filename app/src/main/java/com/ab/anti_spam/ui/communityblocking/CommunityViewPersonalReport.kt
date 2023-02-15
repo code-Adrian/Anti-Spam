@@ -138,6 +138,9 @@ class CommunityViewPersonalReport : Fragment(), cardCommentClickListener, delete
             badCommentCount = goodCommentCount+mediumCommentCount+2F
         }
 
+        val colorLow = ColorTemplate.getHoloBlue()
+        val colorMedium = Color.argb(90, 255, 165, 0)
+        val colorHigh = Color.argb(90, 255, 0, 0)
 
         //No description
         fragBinding.pieChart.description.isEnabled = false
@@ -187,19 +190,19 @@ class CommunityViewPersonalReport : Fragment(), cardCommentClickListener, delete
         if(badCommentCount > 0){
             entries.add(PieEntry(badCommentCount, "High"))
             //High
-            colors.add(ColorTemplate.LIBERTY_COLORS.get(4))
+            colors.add(colorHigh)
         }
 
         if(mediumCommentCount > 0){
             entries.add(PieEntry(mediumCommentCount, "Medium"))
             //Medium
-            colors.add(ColorTemplate.LIBERTY_COLORS.get(1))
+            colors.add(colorMedium)
         }
 
         if(goodCommentCount > 0){
             entries.add(PieEntry(goodCommentCount, "Low"))
             //Low
-            colors.add(ColorTemplate.getHoloBlue())
+            colors.add(colorLow)
         }
 
         if(badCommentCount == 0F && goodCommentCount == 0F && mediumCommentCount == 0F) {

@@ -103,7 +103,7 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
             it.let {
                 if (it != null) {
                     if (it.user_comments.size > 0) {
-
+                        this.model = it
                         val currentUID = communityViewModel.UID.value
 
                         if(currentUID != null) {
@@ -121,6 +121,7 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
                         fragBinding.pieChart.legend.textSize = 15F
                         fragBinding.pieChart.setCenterTextSize(13f)
                         fragBinding.pieChart.layoutParams.height = pieHeight
+
                     }
                 }
             }
