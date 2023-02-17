@@ -28,7 +28,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/settings_scan_sms"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
 
@@ -41,7 +41,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
             android:text="@string/settings_scan_sms_desc"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/toggle_sms_scan"
@@ -78,7 +78,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/settings_database_blocking"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
 
@@ -91,7 +91,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
             android:text="@string/settings_database_blocking_description"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/toggle_db_blocking"
@@ -129,7 +129,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/settings_personal_blacklist_blocking"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
 
@@ -142,7 +142,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
             android:text="@string/settings_personal_blacklist_blocking_description"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/toggle_personal_blocking"
@@ -179,7 +179,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/settings_local_storage_blocking"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
 
@@ -192,7 +192,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
             android:text="@string/settings_local_storage_blocking_description"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/toggle_local_blocking"
@@ -229,7 +229,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/settings_block_unknown_numbers"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
 
@@ -242,7 +242,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
             android:text="@string/settings_block_unknown_numbers_description"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/toggle_unknown_blocking"
@@ -281,7 +281,7 @@
             android:layout_marginTop="10dp"
             android:textAlignment="center"
             android:text="@string/settings_community_blocking"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
 
@@ -296,7 +296,7 @@
             android:layout_marginTop="5dp"
             android:textAlignment="center"
             android:text="@string/settings_community_blocking_description"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/community_comments_desc"
@@ -360,7 +360,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/settings_theme"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
 
@@ -373,7 +373,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
             android:text="@string/settings_theme_description"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/toggle_theme"
@@ -416,7 +416,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/settings_download_blacklist"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
 
@@ -429,7 +429,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
             android:text="@string/settings_download_blacklist_description"
-            android:textSize="16dp" />
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/downlaod_button"
