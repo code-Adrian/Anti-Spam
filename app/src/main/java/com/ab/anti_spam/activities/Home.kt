@@ -1,21 +1,31 @@
 package com.ab.anti_spam.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.ActivityMainBinding
+import com.ab.anti_spam.databinding.NavHeaderMainBinding
+import com.ab.anti_spam.ui.auth.LoggedInViewModel
+import com.ab.anti_spam.ui.auth.Login
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseUser
+import kotlin.math.sign
 
 class Home : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var loggedInViewModel : LoggedInViewModel
+    private lateinit var navHeaderBinding : NavHeaderMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,12 +47,63 @@ class Home : AppCompatActivity() {
             R.id.nav_learnscampatterns), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        signOut(navView)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.main, menu)
-//        return true
-//    }
+    override fun onStart() {
+        super.onStart()
+        loggedInViewModel = ViewModelProvider(this).get(LoggedInViewModel::class.java)
+
+        loggedInViewModel.liveFirebaseUser.observe(this, Observer { firebaseUser ->
+            if (firebaseUser != null) {
+                val currentUser = loggedInViewModel.liveFirebaseUser.value
+                if (currentUser != null){ updateNavHeader(loggedInViewModel.liveFirebaseUser.value!!)}
+
+            }
+        })
+        loggedInViewModel.loggedOut.observe(this, Observer { loggedout ->
+            if (loggedout) {
+                startActivity(Intent(this, Login::class.java))
+                this.finish()
+            }
+        })
+    }
+
+    fun updateNavHeader(currentUser: FirebaseUser){
+        //NavHeaderBinding
+        val navigationHeader = binding.navView.getHeaderView(0)
+        navHeaderBinding = NavHeaderMainBinding.bind(navigationHeader)
+
+        //Check if email verified.
+        if(currentUser.isEmailVerified){
+            navHeaderBinding.username.text = currentUser.email
+            try{
+                //Setting image
+                Glide.with(this).load(currentUser.photoUrl).into(navHeaderBinding.imageView)
+            }catch (e: Exception){
+                println("Email image setting failed")
+            }
+        }
+        //Check if signed in as guest
+        if(currentUser.isAnonymous){
+            navHeaderBinding.username.setText("Logged in as Guest")
+        }
+        //Check if phone verified.
+        if(!currentUser.isAnonymous && !currentUser.isEmailVerified){
+            navHeaderBinding.username.setText(currentUser.phoneNumber)
+        }
+    }
+
+    fun signOut(navView: NavigationView){
+        val menu: Menu = navView.menu
+        val signOutMenuItem = menu.findItem(R.id.nav_logout)
+        signOutMenuItem.setOnMenuItemClickListener {
+            loggedInViewModel.logOut()
+            this.finish()
+            true
+        }
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)

@@ -28,7 +28,6 @@ class Login: AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Splash screen here
 
         loginBinding = LoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
@@ -44,14 +43,14 @@ class Login: AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
 
     private fun loginListener(){
-        loginBinding.welcomeButton.setOnClickListener{
+       // loginBinding.welcomeButton.setOnClickListener{
             if(hasPermissions() ) {
                 //If Default dialer is set, it ignores intent and responds with ACTIVITY OK, then continues.
                 requestDefaultCallerIDPermissions()
             }else{
                 requestPermissions()
             }
-        }
+        //}
     }
     override fun onStop() {
         super.onStop()
@@ -85,7 +84,7 @@ class Login: AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        Toast.makeText(applicationContext,"Permissions Granted!", Toast.LENGTH_SHORT).show()
+       // Toast.makeText(applicationContext,"Permissions Granted!", Toast.LENGTH_SHORT).show()
     }
 
     fun requestDefaultCallerIDPermissions(){
@@ -118,6 +117,7 @@ class Login: AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         if (result.resultCode == Activity.RESULT_OK) {
             if(Settings.canDrawOverlays(this)){
                 loginViewModel.login()
+                this.finish()
             }else{
                 openOverlayActivityForResult()
             }

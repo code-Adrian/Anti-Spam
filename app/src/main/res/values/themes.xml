@@ -22,7 +22,7 @@
     <style name="Theme.Antispam.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="UItheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/gradient_main</item>
+        <item name="android:windowBackground">@color/blueish</item>
     </style>
 
     <style name="MyToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

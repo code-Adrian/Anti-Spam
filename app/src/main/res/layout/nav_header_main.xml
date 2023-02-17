@@ -14,23 +14,26 @@
     android:gravity="left|center"
     tools:ignore="RtlHardcoded">
 
-    <ImageView
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/logo_white"
+        android:src="@drawable/logo_white"
         android:contentDescription="@string/nav_header_desc"
         android:id="@+id/imageView" />
 
     <TextView
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/imageView"
+        android:layout_alignParentEnd="true"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:layout_centerVertical="true"
         android:text="@string/nav_header_title"
+        android:maxLength="25"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 </RelativeLayout>

@@ -16,7 +16,7 @@ class FirebaseAuthManager(application: Application, login: Login?) {
     val AUTH_CODE = 400
     lateinit var listener: FirebaseAuth.AuthStateListener
     lateinit var providers: List<AuthUI.IdpConfig>
-
+    var isActivityWindowOpen = false
     private var application: Application? = null
     private var loginInstance: Login? = null
 
@@ -39,6 +39,7 @@ class FirebaseAuthManager(application: Application, login: Login?) {
 
     fun providers(){
         providers = arrayListOf(
+            AuthUI.IdpConfig.GoogleBuilder().build(),
             AuthUI.IdpConfig.PhoneBuilder().build(),
             AuthUI.IdpConfig.AnonymousBuilder().build(),
             AuthUI.IdpConfig.EmailBuilder().build()
@@ -51,16 +52,27 @@ class FirebaseAuthManager(application: Application, login: Login?) {
             override fun onAuthStateChanged(p0: FirebaseAuth) {
                 val user = p0.currentUser
                 if(user != null){ //If authenticated
-                    loginInstance?.startActivity(Intent(application, Home::class.java))
+                    if(!isActivityWindowOpen) {
+                        loggedOut.postValue(true)
+                        loginInstance?.startActivity(Intent(application, Home::class.java))
+                        isActivityWindowOpen = true
+                    }
                 }else{ //Not authenticated
-                    try {
-                        loginInstance?.startActivityForResult(
-                            AuthUI.getInstance().createSignInIntentBuilder().setTheme(R.style.UItheme).setLogo(R.drawable.textlesslogo)
-                                .setAvailableProviders(providers).build(), AUTH_CODE)
-                    }catch (e: Exception){
-                        println("Error occurred " +e.toString())
+                    if (loggedOut.value == true || loggedOut.value == null) {
+                        try {
+                            loginInstance?.startActivityForResult(
+                                AuthUI.getInstance().createSignInIntentBuilder()
+                                    .setTheme(R.style.UItheme).setLogo(R.drawable.logo_white)
+                                    .setAvailableProviders(providers).build(), AUTH_CODE
+                            )
+                        } catch (e: Exception) {
+                            println("Error occurred " + e.toString())
+                        }finally {
+                            loggedOut.postValue(false)
+                        }
                     }
                 }
+
             }
         }
         firebaseAuth?.addAuthStateListener(listener)
