@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -68,7 +69,7 @@ class AddBlacklistQuestionDialog : DialogFragment() {
         fragBinding.add.setBackgroundColor(ColorTemplate.COLORFUL_COLORS[3])
 
         listeners()
-
+        darkTheme()
         return root
     }
 
@@ -93,4 +94,13 @@ class AddBlacklistQuestionDialog : DialogFragment() {
         this.dismiss()
     }
 
+
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+            fragBinding.header.setTextColor(Color.WHITE)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
+        }
+    }
 }

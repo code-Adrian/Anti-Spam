@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
@@ -36,7 +37,7 @@ class OptionsDialog: DialogFragment() {
     listeners()
 
 
-
+        darkTheme()
         return root
     }
 
@@ -59,6 +60,15 @@ class OptionsDialog: DialogFragment() {
         fragBinding.regexBlock.setOnClickListener{
             dismiss()
             findNavController().navigate(R.id.action_nav_call_blacklist_to_regexBlockDialog)
+        }
+    }
+
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+            fragBinding.header.setTextColor(Color.WHITE)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
         }
     }
 

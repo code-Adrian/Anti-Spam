@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -46,7 +47,7 @@ class CountryBlockDialog: DialogFragment() {
         fragBinding.BlockByCountry.setOnClickListener{
             addBlock()
         }
-
+        darkTheme()
         return root
     }
 
@@ -58,6 +59,15 @@ class CountryBlockDialog: DialogFragment() {
             blacklistViewModel.addBlacklist(model, app)
             dismiss()
             fragBinding.BlockByCountry.isEnabled = false
+        }
+    }
+
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+            fragBinding.header.setTextColor(Color.WHITE)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
         }
     }
 }

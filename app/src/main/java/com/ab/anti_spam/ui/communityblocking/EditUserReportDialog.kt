@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
@@ -55,7 +56,7 @@ class EditUserReportDialog : DialogFragment() {
         populateDropDownMenus()
         exitListener()
         editReport()
-
+        darkTheme()
         return root
     }
 
@@ -121,5 +122,12 @@ class EditUserReportDialog : DialogFragment() {
         }
     }
 
-
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+            fragBinding.header.setTextColor(Color.WHITE)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
+        }
+    }
 }

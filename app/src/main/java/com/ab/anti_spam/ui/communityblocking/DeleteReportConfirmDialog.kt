@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
@@ -46,7 +47,7 @@ class DeleteReportConfirmDialog : DialogFragment() {
 
         fragBinding.delete.setBackgroundColor(ColorTemplate.COLORFUL_COLORS[0])
         listeners()
-
+        darkTheme()
         return root
     }
 
@@ -67,5 +68,11 @@ class DeleteReportConfirmDialog : DialogFragment() {
 
     }
 
-
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
+        }
+    }
 }

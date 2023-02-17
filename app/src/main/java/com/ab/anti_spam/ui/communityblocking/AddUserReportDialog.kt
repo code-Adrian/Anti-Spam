@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -75,6 +76,7 @@ class AddUserReportDialog : DialogFragment() {
         automaticCountryDetection()
         navigationListener()
         addReport()
+        darkTheme()
         return root
     }
 
@@ -176,5 +178,10 @@ class AddUserReportDialog : DialogFragment() {
         }
     }
 
-
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+            fragBinding.header.setTextColor(Color.WHITE)
+        }
+    }
 }

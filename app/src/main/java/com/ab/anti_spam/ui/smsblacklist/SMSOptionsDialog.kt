@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.ab.anti_spam.R
@@ -29,7 +30,7 @@ class SMSOptionsDialog: DialogFragment() {
         listeners()
 
 
-
+        darkTheme()
         return root
     }
 
@@ -41,6 +42,15 @@ class SMSOptionsDialog: DialogFragment() {
         fragBinding.regexBlock.setOnClickListener{
             dismiss()
             findNavController().navigate(R.id.action_nav_sms_blacklist_to_SMSRegexBlockDialog)
+        }
+    }
+
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+            fragBinding.header.setTextColor(Color.WHITE)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
         }
     }
 

@@ -9,6 +9,7 @@ import android.provider.CallLog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -47,7 +48,7 @@ class AddUserReportChooseNumberDialog : DialogFragment(),chooseNumberListener {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         renderRecyclerView(getRecentCalls())
-
+        darkTheme()
         return root
     }
 
@@ -127,6 +128,15 @@ class AddUserReportChooseNumberDialog : DialogFragment(),chooseNumberListener {
         val bundle = Bundle()
         bundle.putParcelable("model",model)
         findNavController().navigate(R.id.action_nav_community_blocking_to_addUserReportDialog2,bundle)
+    }
+
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+            fragBinding.header.setTextColor(Color.WHITE)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
+        }
     }
 
 }

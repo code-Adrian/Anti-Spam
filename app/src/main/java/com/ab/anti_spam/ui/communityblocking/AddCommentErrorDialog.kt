@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.FragmentAddCommentDialogBinding
@@ -37,7 +38,7 @@ class AddCommentErrorDialog : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         acknowledgeMessagelistener()
-
+        darkTheme()
         return root
     }
 
@@ -48,5 +49,10 @@ class AddCommentErrorDialog : DialogFragment() {
     }
 
 
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
 
+        }
+    }
 }

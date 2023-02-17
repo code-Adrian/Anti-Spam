@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.ab.anti_spam.R
@@ -43,7 +44,7 @@ class ReportExistsVisitDialog : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         listener()
-
+        darkTheme()
         return root
     }
 
@@ -65,5 +66,11 @@ class ReportExistsVisitDialog : DialogFragment() {
         }
 
     }
-
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
+        }
+    }
 }

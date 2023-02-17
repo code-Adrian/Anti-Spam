@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.CallblacklistNumberblockDialogBinding
 import com.ab.anti_spam.databinding.SmsblacklistKeywordblockDialogBinding
 import com.ab.anti_spam.main.Main
@@ -40,7 +42,7 @@ class KeywordBlockDialog: DialogFragment() {
         fragBinding.WarnByKeyword.setOnClickListener{
             addWarning()
         }
-
+        darkTheme()
         return root
     }
 
@@ -52,6 +54,15 @@ class KeywordBlockDialog: DialogFragment() {
             blacklistViewModel.addBlacklist(model, app)
             dismiss()
             fragBinding.WarnByKeyword.isEnabled = false
+        }
+    }
+
+    fun darkTheme(){
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background_dark)
+            fragBinding.header.setTextColor(Color.WHITE)
+        }else{
+            fragBinding.root.setBackgroundResource(R.drawable.dialog_background)
         }
     }
 

@@ -267,7 +267,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -312,13 +312,14 @@
 
         <com.google.android.material.slider.Slider
             android:id="@+id/comment_slider"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="10dp"
+            android:layout_below="@+id/community_blocking_desc"
+
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="25dp"
             android:layout_toEndOf="@+id/community_comments_desc"
+            android:layout_alignEnd="@+id/comment_num"
             android:value="3"
             android:valueFrom="0"
             android:valueTo="10"
@@ -329,10 +330,10 @@
             android:id="@+id/comment_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/comment_slider"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/community_blocking_desc"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
             android:text="3"
             android:textSize="20dp"
             />

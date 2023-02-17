@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.activityViewModels
 import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.FragmentCommunityblockingBinding
@@ -123,8 +124,10 @@ class Settings : Fragment() {
         fragBinding.toggleTheme.setOnCheckedChangeListener{_,isChecked ->
             if(isChecked){
                 update()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }else{
                 update()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
         }
         fragBinding.toggleUnknownBlocking.setOnCheckedChangeListener{_,isChecked ->

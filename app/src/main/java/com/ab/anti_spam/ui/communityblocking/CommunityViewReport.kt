@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.provider.CallLog
 import android.view.*
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
@@ -302,6 +303,12 @@ class CommunityViewReport : Fragment(),cardCommentClickListener,deleteCommentCli
             fragBinding.pieChart.legend.position = Legend.LegendPosition.RIGHT_OF_CHART
             fragBinding.pieChart.legend.textSize = 15F
             fragBinding.pieChart.setCenterTextSize(13f)
+        }
+
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            dataSet.valueLineColor = Color.WHITE
+            dataSet.valueTextColor = Color.WHITE
+            fragBinding.pieChart.legend.textColor = Color.WHITE
         }
 
         //Draw the pie chart.

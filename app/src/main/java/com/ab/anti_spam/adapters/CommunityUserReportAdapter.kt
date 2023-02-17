@@ -3,6 +3,7 @@ package com.ab.anti_spam.adapters
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.RecyclerView
 import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.UserReportCardBinding
@@ -190,6 +191,11 @@ inner class MainHolder(val binding: UserReportCardBinding): RecyclerView.ViewHol
         dataSet.valueLinePart2Length  = 0.4F
 
         dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            dataSet.valueLineColor = Color.WHITE
+            dataSet.valueTextColor = Color.WHITE
+            binding.pieChart.legend.textColor = Color.WHITE
+        }
         //Check if there are 3 entries
         if(goodCommentCount > 0 && mediumCommentCount > 0 && badCommentCount > 0) {
             //Automatic highlight of the highest comment value.

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.provider.CallLog
 import android.view.*
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
@@ -233,6 +234,11 @@ class CommunityViewPersonalReport : Fragment(), cardCommentClickListener, delete
         //Apply data to Pie chart.
         fragBinding.pieChart.data = data
 
+        //Setting value lines
+        dataSet.valueLinePart1Length = 0.6F
+        dataSet.valueLinePart2Length  = 0.6F
+        dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+
         //Check if there are 3 entries
         if(entries.size == 3) {
             //Automatic highlight of the highest comment value.
@@ -263,10 +269,15 @@ class CommunityViewPersonalReport : Fragment(), cardCommentClickListener, delete
             fragBinding.pieChart.setCenterTextSize(13f)
         }
 
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            dataSet.valueLineColor = Color.WHITE
+            dataSet.valueTextColor = Color.WHITE
+            fragBinding.pieChart.legend.textColor = Color.WHITE
+        }
+
         //Draw the pie chart.
         fragBinding.pieChart.invalidate()
     }
-
 
     private fun setupMenu(){
 
