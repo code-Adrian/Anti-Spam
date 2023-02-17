@@ -88,6 +88,24 @@
     <string name="delete">Delete</string>
     <string name="delete_report_confirm_text">Are you sure you want to delete the current report? Changes cannot be undone.</string>
     <string name="personal_view_pager_empty_text">Your personal reports seem to be empty. Tap the + button to report a phone number.</string>
+    <string name="settings_scan_sms">Scan SMS</string>
+    <string name="settings_scan_sms_desc">Checks incoming SMS body and warns if detected suspicious string.</string>
+    <string name="settings_database_blocking">Database Blocking</string>
+    <string name="settings_database_blocking_description">Blocks incoming phone calls using the database blocklist. (Requires Wi-Fi)</string>
+    <string name="toggle_off">OFF</string>
+    <string name="settings_personal_blacklist_blocking">Personal Blacklist Blocking</string>
+    <string name="settings_personal_blacklist_blocking_description">Blocks incoming phone calls using personal blacklist.</string>
+    <string name="settings_local_storage_blocking">Local Storage Blocking</string>
+    <string name="settings_local_storage_blocking_description">Blocks incoming phone calls using local storage. (Downloaded from the database).</string>
+    <string name="settings_block_unknown_numbers">Block Unknown Numbers</string>
+    <string name="settings_block_unknown_numbers_description">Blocks incoming phone calls using local storage. (Downloaded from the database).</string>
+    <string name="settings_community_blocking">Community Blocking</string>
+    <string name="settings_community_blocking_description">Blocks community reported numbers by negative comments</string>
+    <string name="settings_community_comments_text">Comments:</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_description">Toggle between dark / light theme</string>
+    <string name="settings_download_blacklist">Download Blacklist</string>
+    <string name="settings_download_blacklist_description">Downloads blacklists from cloud. (When internet connection is down)</string>
 
     <string-array name="warning">
         <item>High</item>

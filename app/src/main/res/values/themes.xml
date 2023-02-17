@@ -30,4 +30,17 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColor" >@color/white</item>
     </style>
+
+    <style name="settingswitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/blueish</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/blueishTransp
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/blueishTransp
+        </item>
+    </style>
 </resources>

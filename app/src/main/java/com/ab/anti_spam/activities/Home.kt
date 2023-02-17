@@ -44,7 +44,9 @@ class Home : AppCompatActivity() {
             R.id.nav_call_blacklist,
             R.id.nav_sms_blacklist,
             R.id.nav_community_blocking,
-            R.id.nav_learnscampatterns), drawerLayout)
+            R.id.nav_learnscampatterns,
+            R.id.nav_settings
+        ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 

@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blueish">#016BD8</color>
+    <color name="blueishTransp">#80016BD8</color>
     <color name="blueish2">#0e63eb</color>
     <color name="drawer">#016BD8</color>
     <color name="test">#00AAE2</color>
