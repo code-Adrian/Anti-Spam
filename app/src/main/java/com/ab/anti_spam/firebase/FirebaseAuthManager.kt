@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.ab.anti_spam.R
 import com.ab.anti_spam.activities.Home
+import com.ab.anti_spam.helpers.UIDsave
 import com.ab.anti_spam.ui.auth.Login
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -34,6 +35,7 @@ class FirebaseAuthManager(application: Application, login: Login?) {
         if (firebaseAuth!!.currentUser != null) {
             liveFirebaseUser.postValue(firebaseAuth!!.currentUser)
             loggedOut.postValue(false)
+            UIDsave.saveUidToFile(firebaseAuth!!.currentUser!!.uid,application.applicationContext)
         }
     }
 

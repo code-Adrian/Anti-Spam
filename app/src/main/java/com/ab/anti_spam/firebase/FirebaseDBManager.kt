@@ -4,11 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import com.ab.anti_spam.models.CommunityBlockingCommentsModel
 import com.ab.anti_spam.models.CommunityBlockingModel
 import com.ab.anti_spam.models.CommunityDBInterface
+import com.ab.anti_spam.models.FirestoreDBInterface
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 
-
-object FirebaseDBManager : CommunityDBInterface{
+object FirebaseDBManager : CommunityDBInterface, FirestoreDBInterface {
     override fun createCommunityReport(model: CommunityBlockingModel, currentUserUID: String) {
        val database: DatabaseReference = FirebaseDatabase.getInstance().reference.child("community-reports").child(currentUserUID)
         database.child(model.id.toString()).setValue(model)
@@ -191,6 +194,22 @@ object FirebaseDBManager : CommunityDBInterface{
         })
     }
 
+    override fun checkNumber(phoneNumber: String, callback: (Boolean) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val blocklistRef = db.collection("blocklist")
+        val query: Query = blocklistRef.whereEqualTo(FieldPath.documentId(), phoneNumber)
+
+        query.get().addOnSuccessListener { querySnapshot ->
+                val isBlocked = !querySnapshot.isEmpty
+                callback(isBlocked)
+            }
+            .addOnFailureListener { exception ->
+                // handle exceptions here
+                println(exception)
+                callback(false)
+            }
+    }
+
     override fun updateCommunityReportComments(model: CommunityBlockingCommentsModel, reportId: String, currentUserUID: String,reportUID: String,updateModel: MutableLiveData<CommunityBlockingModel?>) {
         val database: DatabaseReference = FirebaseDatabase.getInstance().reference.child("community-reports")
         database.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -276,6 +295,7 @@ object FirebaseDBManager : CommunityDBInterface{
             override fun onCancelled(error: DatabaseError) {}
         })
     }
+
 
 
 

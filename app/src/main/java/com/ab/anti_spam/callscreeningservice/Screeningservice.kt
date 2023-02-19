@@ -1,27 +1,100 @@
 package com.ab.anti_spam.callscreeningservice
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.telecom.Call
+import android.telecom.Call.Details
 import android.telecom.CallScreeningService
 import android.telecom.CallScreeningService.CallResponse.Builder
+import com.ab.anti_spam.firebase.FirebaseDBManager
+import com.ab.anti_spam.helpers.UIDsave
 import com.ab.anti_spam.localstorage.CallBlacklistStorage
+import com.ab.anti_spam.localstorage.SettingsStorage
+import com.ab.anti_spam.models.SettingsModel
+
 
 class Screeningservice: CallScreeningService() {
 
     override fun onScreenCall(callDetails: Call.Details) {
         val phoneNumber = getPhoneNumber(callDetails)
-        var response = CallResponse.Builder()
-        response = handlePhoneCall(response, phoneNumber)
+        val response = CallResponse.Builder()
+        handlePhoneCall(response, phoneNumber, applicationContext,callDetails)
 
-        respondToCall(callDetails, response.build())
     }
 
-    private fun handlePhoneCall(
-        response: CallResponse.Builder,
-        phoneNumber: String
-    ): CallResponse.Builder {
+    private fun handlePhoneCall(response: CallResponse.Builder, phoneNumber: String, context: Context,callDetails: Details) {
         println(String.format("Incoming call from %s", phoneNumber))
+        //Gets the latest authenticated user UID from file.
+        val latestUID = UIDsave.getUidFromFile(applicationContext)
+        val settings = latestUID?.let { getSettings(it) }
+        if(settings != null) {
+            if(settings.unknown_block == true){
+                if(callDetails.handle.schemeSpecificPart.isNullOrEmpty()){
+                    blockNumber(response, "Unknown", callDetails)
+                }
+            }
 
+            if(settings.personal_block == true){
+                personalBlacklistBlocking(response, phoneNumber,callDetails)
+            }
+            if(settings.local_store_block == true){
+
+            }
+
+
+            //Community Blocking (Realtime Database) callback
+                FirebaseDBManager.getCommunityReportByNumber(phoneNumber, {
+                    if (it != null) {
+                        if(it.user_comments.size >= settings.community_block_num) {
+                            blockNumber(response, phoneNumber, callDetails)
+                        }
+
+                    }
+                })
+
+            //Database Blocking (FireStore) callback
+            if(settings.database_block == true){
+                FirebaseDBManager.checkNumber(phoneNumber,{
+                    if(it == true){
+                        blockNumber(response, phoneNumber, callDetails)
+                    }
+                })
+            }
+            
+        }
+
+    }
+
+    private fun getPhoneNumber(callDetails: Call.Details): String {
+        return callDetails.handle.toString().replace("tel:","").replace("%2B","+")
+        //.removeTelPrefix().parseCountryCode()
+    }
+
+
+    fun getSettings(uid: String) : SettingsModel?{
+        try {
+            //Gets settings
+            val settings = SettingsStorage(this.applicationContext)
+            //Gets all the settings
+            val allSettings = settings.getAll()
+            //Local variable
+            var userSetting: SettingsModel? = null
+            //Gets the settings associated to the user ID
+            for (i in allSettings) {
+                if (i.uid.equals(uid)) {
+                    userSetting = i
+                    break
+                }
+            }
+            return userSetting
+        }catch (e: Exception){
+            return null
+        }
+    }
+    fun personalBlacklistBlocking(response: CallResponse.Builder,phoneNumber: String,callDetails: Details){
+        //Gets the Callblacklists
         val localStorage = CallBlacklistStorage(this.applicationContext)
+
         val array = localStorage.getAll()
         val countryBlockArray = arrayListOf<String>()
         val numberBlockArray = arrayListOf<String>()
@@ -44,7 +117,7 @@ class Screeningservice: CallScreeningService() {
 
             for (i in cleanArray){
                 if(i in phoneNumber){
-                    blockNumber(response,phoneNumber)
+                    blockNumber(response,phoneNumber,callDetails)
                 }
             }
         }
@@ -52,7 +125,7 @@ class Screeningservice: CallScreeningService() {
             val cleanArray = cleanNumber(numberBlockArray)
             for(i in cleanArray){
                 if(i in phoneNumber){
-                    blockNumber(response,phoneNumber)
+                    blockNumber(response,phoneNumber,callDetails)
                 }
             }
         }
@@ -60,18 +133,13 @@ class Screeningservice: CallScreeningService() {
             val cleanArray = cleanRegex(regexBlockArray)
             for(i in cleanArray){
                 if(phoneNumber.matches(i.toRegex())){
-                    blockNumber(response,phoneNumber)
+                    blockNumber(response,phoneNumber,callDetails)
                 }
             }
         }
-
-        return response
     }
 
-    private fun getPhoneNumber(callDetails: Call.Details): String {
-        return callDetails.handle.toString().replace("tel:","").replace("%2B","+")
-        //.removeTelPrefix().parseCountryCode()
-    }
+
 
     private fun cleanCountry(countryArray: ArrayList<String>): java.util.ArrayList<String>{
         val cleanArray = arrayListOf<String>()
@@ -107,12 +175,15 @@ class Screeningservice: CallScreeningService() {
         return cleanArray
     }
 
-    private fun blockNumber(response: Builder,phoneNumber: String){
+    @SuppressLint("MissingPermission")
+    private fun blockNumber(response: Builder, phoneNumber: String,callDetails: Details){
+
         response.apply {
             println((String.format("Rejected call from %s", phoneNumber)))
             setRejectCall(true)
             setDisallowCall(true)
             setSkipCallLog(true)
+            respondToCall(callDetails, response.build())
         }
     }
 
