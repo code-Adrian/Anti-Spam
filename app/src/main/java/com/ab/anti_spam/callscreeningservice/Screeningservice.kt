@@ -7,8 +7,10 @@ import android.telecom.Call.Details
 import android.telecom.CallScreeningService
 import android.telecom.CallScreeningService.CallResponse.Builder
 import com.ab.anti_spam.firebase.FirebaseDBManager
+import com.ab.anti_spam.helpers.SHA256
 import com.ab.anti_spam.helpers.UIDsave
 import com.ab.anti_spam.localstorage.CallBlacklistStorage
+import com.ab.anti_spam.localstorage.LocalBlockStorage
 import com.ab.anti_spam.localstorage.SettingsStorage
 import com.ab.anti_spam.models.SettingsModel
 
@@ -38,7 +40,7 @@ class Screeningservice: CallScreeningService() {
                 personalBlacklistBlocking(response, phoneNumber,callDetails)
             }
             if(settings.local_store_block == true){
-
+                localDBlocking(response,phoneNumber,callDetails)
             }
 
 
@@ -60,7 +62,9 @@ class Screeningservice: CallScreeningService() {
                     }
                 })
             }
-            
+
+
+
         }
 
     }
@@ -91,6 +95,23 @@ class Screeningservice: CallScreeningService() {
             return null
         }
     }
+
+    fun localDBlocking(response: CallResponse.Builder,phoneNumber: String,callDetails: Details){
+        val localBlockStorage = LocalBlockStorage(applicationContext)
+
+        if(localBlockStorage.checkIfExists()){
+
+            val blacklist = localBlockStorage.getAll()
+            val convertedNumber = SHA256.sha256(phoneNumber)
+            for(i in blacklist){
+                if(i.number.equals(convertedNumber)){
+                    blockNumber(response,phoneNumber,callDetails)
+                }
+            }
+
+        }
+    }
+
     fun personalBlacklistBlocking(response: CallResponse.Builder,phoneNumber: String,callDetails: Details){
         //Gets the Callblacklists
         val localStorage = CallBlacklistStorage(this.applicationContext)

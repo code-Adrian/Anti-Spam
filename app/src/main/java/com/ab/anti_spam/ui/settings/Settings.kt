@@ -1,5 +1,8 @@
 package com.ab.anti_spam.ui.settings
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import com.ab.anti_spam.R
 import com.ab.anti_spam.databinding.FragmentCommunityblockingBinding
 import com.ab.anti_spam.databinding.FragmentSettingsBinding
+import com.ab.anti_spam.firebase.FirebaseDBManager
+import com.ab.anti_spam.localstorage.LocalBlockStorage
 import com.ab.anti_spam.main.Main
 import com.ab.anti_spam.models.CallBlacklistModel
 import com.ab.anti_spam.models.SettingsModel
@@ -23,9 +28,11 @@ class Settings : Fragment() {
     private val loggedInViewModel : LoggedInViewModel by activityViewModels()
     private val settingsViewModel : SettingsViewModel by activityViewModels()
     private lateinit var uid: String
+    private lateinit var localStorage : LocalBlockStorage
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = activity?.application as Main
+        localStorage = LocalBlockStorage(app)
     }
 
     override fun onCreateView(
@@ -42,6 +49,7 @@ class Settings : Fragment() {
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     private fun loadFireUser(){
         loggedInViewModel.loadSettings(app)
         loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner,{
@@ -143,10 +151,23 @@ class Settings : Fragment() {
             update()
         }
 
-        fragBinding.downlaodButton.setOnClickListener{
+        //Check if local storage exists
+        if(localStorage.checkIfExists() == false) {
+            fragBinding.downlaodButton.setBackgroundColor(Color.YELLOW)
+            fragBinding.downlaodButton.setOnClickListener {
+                fragBinding.loading.visibility = View.VISIBLE
+            fragBinding.downlaodButton.isEnabled = false
+                settingsViewModel.fetchBlocklist {
+                    localStorage.serialize(it)
+                    fragBinding.loading.visibility = View.INVISIBLE
+                }
+            }
+        }else{
+            fragBinding.downlaodButton.isEnabled = false
+            fragBinding.downlaodButton.setText("Updated")
+            fragBinding.downlaodButton.setTextColor(Color.GREEN)
 
         }
-
     }
 
 

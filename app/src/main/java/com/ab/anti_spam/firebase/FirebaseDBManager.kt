@@ -1,10 +1,8 @@
 package com.ab.anti_spam.firebase
 
 import androidx.lifecycle.MutableLiveData
-import com.ab.anti_spam.models.CommunityBlockingCommentsModel
-import com.ab.anti_spam.models.CommunityBlockingModel
-import com.ab.anti_spam.models.CommunityDBInterface
-import com.ab.anti_spam.models.FirestoreDBInterface
+import com.ab.anti_spam.helpers.SHA256
+import com.ab.anti_spam.models.*
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
@@ -209,6 +207,36 @@ object FirebaseDBManager : CommunityDBInterface, FirestoreDBInterface {
                 callback(false)
             }
     }
+
+
+    override fun getBlockList(callback: (blocklist : MutableList<LocalBlockModel>) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val blocklistRef = db.collection("blocklist")
+
+        blocklistRef.get().addOnSuccessListener { documents ->
+            val blocklist = mutableListOf<LocalBlockModel>()
+
+            for (document in documents) {
+
+                var phoneNumber = document.id
+                val data = document.data
+                val country = data["country"] as String
+                val risk = data["risk"] as String
+                val userReports = data["user_reports"] as String
+
+                //Convert number to SHA256
+                phoneNumber = SHA256.sha256(phoneNumber)
+
+                val localBlock = LocalBlockModel(number = phoneNumber, risk = risk, user_comments = userReports, country = country)
+                blocklist.add(localBlock)
+            }
+            callback(blocklist)
+        }.addOnFailureListener{exception ->
+            println(exception)
+        }
+
+    }
+
 
     override fun updateCommunityReportComments(model: CommunityBlockingCommentsModel, reportId: String, currentUserUID: String,reportUID: String,updateModel: MutableLiveData<CommunityBlockingModel?>) {
         val database: DatabaseReference = FirebaseDatabase.getInstance().reference.child("community-reports")

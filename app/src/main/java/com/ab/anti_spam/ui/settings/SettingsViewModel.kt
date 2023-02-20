@@ -2,8 +2,10 @@ package com.ab.anti_spam.ui.settings
 
 import androidx.lifecycle.ViewModel
 import com.ab.anti_spam.databinding.FragmentSettingsBinding
+import com.ab.anti_spam.firebase.FirebaseDBManager
 import com.ab.anti_spam.localstorage.SettingsStorage
 import com.ab.anti_spam.main.Main
+import com.ab.anti_spam.models.LocalBlockModel
 import com.ab.anti_spam.models.SettingsModel
 
 class SettingsViewModel: ViewModel() {
@@ -30,5 +32,13 @@ class SettingsViewModel: ViewModel() {
     fun updateSettings(model: SettingsModel,app: Main){
         val settings = SettingsStorage(app.applicationContext)
         settings.update(model)
+    }
+
+    fun fetchBlocklist(callback: (blocklist : MutableList<LocalBlockModel>) -> Unit)  {
+        FirebaseDBManager.getBlockList {
+            if(it.size > 0){
+                callback(it)
+            }
+        }
     }
 }
