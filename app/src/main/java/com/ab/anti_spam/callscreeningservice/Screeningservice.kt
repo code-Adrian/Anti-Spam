@@ -2,6 +2,7 @@ package com.ab.anti_spam.callscreeningservice
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.telecom.Call
 import android.telecom.Call.Details
 import android.telecom.CallScreeningService
@@ -13,6 +14,7 @@ import com.ab.anti_spam.localstorage.CallBlacklistStorage
 import com.ab.anti_spam.localstorage.LocalBlockStorage
 import com.ab.anti_spam.localstorage.SettingsStorage
 import com.ab.anti_spam.models.SettingsModel
+import com.ab.anti_spam.smswarning.overlayservice
 
 
 class Screeningservice: CallScreeningService() {
@@ -31,47 +33,49 @@ class Screeningservice: CallScreeningService() {
         val settings = latestUID?.let { getSettings(it) }
         if(settings != null) {
             if(settings.unknown_block == true){
-                if(callDetails.handle.schemeSpecificPart.isNullOrEmpty()){
+                if(phoneNumber.isEmpty()){
                     blockNumber(response, "Unknown", callDetails)
                 }
             }
+            if(phoneNumber.isNotEmpty()) {
+                if (settings.personal_block == true) {
+                    personalBlacklistBlocking(response, phoneNumber, callDetails)
+                }
+                if (settings.local_store_block == true) {
+                    localDBlocking(response, phoneNumber, callDetails)
+                }
 
-            if(settings.personal_block == true){
-                personalBlacklistBlocking(response, phoneNumber,callDetails)
-            }
-            if(settings.local_store_block == true){
-                localDBlocking(response,phoneNumber,callDetails)
-            }
 
-
-            //Community Blocking (Realtime Database) callback
+                //Community Blocking (Realtime Database) callback
                 FirebaseDBManager.getCommunityReportByNumber(phoneNumber, {
                     if (it != null) {
-                        if(it.user_comments.size >= settings.community_block_num) {
+                        if (it.user_comments.size >= settings.community_block_num) {
                             blockNumber(response, phoneNumber, callDetails)
                         }
 
                     }
                 })
 
-            //Database Blocking (FireStore) callback
-            if(settings.database_block == true){
-                FirebaseDBManager.checkNumber(phoneNumber,{
-                    if(it == true){
-                        blockNumber(response, phoneNumber, callDetails)
-                    }
-                })
+                //Database Blocking (FireStore) callback
+                if (settings.database_block == true) {
+                    FirebaseDBManager.checkNumber(phoneNumber, {
+                        if (it == true) {
+                            blockNumber(response, phoneNumber, callDetails)
+                        }
+                    })
+                }
+
             }
-
-
 
         }
 
     }
 
     private fun getPhoneNumber(callDetails: Call.Details): String {
-        return callDetails.handle.toString().replace("tel:","").replace("%2B","+")
-        //.removeTelPrefix().parseCountryCode()
+        if(callDetails.handle != null) {
+            return callDetails.handle.toString().replace("tel:", "").replace("%2B", "+")
+            //.removeTelPrefix().parseCountryCode()
+        }else return ""
     }
 
 
@@ -201,6 +205,11 @@ class Screeningservice: CallScreeningService() {
 
         response.apply {
             println((String.format("Rejected call from %s", phoneNumber)))
+
+            //Trigger warning
+            val overlayintent = Intent(applicationContext, overlayservice::class.java)
+            overlayintent.putExtra("call_from", phoneNumber)
+            applicationContext.startService(Intent(overlayintent))
             setRejectCall(true)
             setDisallowCall(true)
             setSkipCallLog(true)

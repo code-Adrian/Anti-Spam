@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'kotlin-parcelize'
+    id 'com.chaquo.python'
 }
 
 android {
@@ -15,8 +16,31 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        python {
+            version "3.10"
+        }
+
+        python {
+            buildPython "C:/Users/Adrian/AppData/Local/Programs/Python/Python310/python.exe"
+        }
+        sourceSets {
+            main {
+                python.srcDir "src/main/python"
+            }
+        }
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+
+        python {
+            pip {
+                // A requirement specifier, with or without a version number:
+                install "pandas"
+            }
+        }
     }
 
     buildTypes {

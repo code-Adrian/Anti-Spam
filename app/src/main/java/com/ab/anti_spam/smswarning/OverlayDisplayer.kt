@@ -49,3 +49,44 @@ fun display(context: Context, msg_from: String){
 
 
 }
+//Allows to display only one overlay for blocked call.
+var displayGate : Boolean = true
+fun callBlockDisplay(context: Context, call_from: String){
+    if(displayGate == true) {
+        val width = Resources.getSystem().displayMetrics.widthPixels - 250
+        val height = Resources.getSystem().displayMetrics.heightPixels / 2
+
+
+        val Params: WindowManager.LayoutParams = WindowManager.LayoutParams(
+            width, height,
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT
+        )
+
+
+        val layoutInflater =
+            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = layoutInflater.inflate(R.layout.warning_overlay, null)
+
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        wm.addView(layout, Params)
+
+        val button: Button = layout.findViewById(R.id.close_overlay)
+        button.width = width - 175
+
+        val warningText: TextView = layout.findViewById(R.id.warning_message);
+        warningText.setText("Number (${call_from}) has been blocked and detected as FRADUELENT.\n")
+        displayGate = false
+        button.setOnClickListener {
+            wm.removeView(layout)
+            try {
+                val overlayintent = Intent(context, overlayservice::class.java)
+                context.stopService(overlayintent)
+                displayGate = true
+            } catch (e: Exception) {
+                println(e)
+            }
+        }
+    }
+}

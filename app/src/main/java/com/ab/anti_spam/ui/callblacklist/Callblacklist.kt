@@ -1,6 +1,5 @@
 package com.ab.anti_spam.ui.callblacklist
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.view.MenuHost
@@ -19,7 +18,7 @@ import com.ab.anti_spam.adapters.deleteListener
 import com.ab.anti_spam.databinding.FragmentCallblacklistBinding
 import com.ab.anti_spam.main.Main
 import com.ab.anti_spam.models.CallBlacklistModel
-import com.ab.anti_spam.smswarning.overlayservice
+import com.ab.anti_spam.smswarning.NaiveClassifier
 import com.google.android.material.tabs.TabLayout
 
 
@@ -54,7 +53,6 @@ class Callblacklist : Fragment(),deleteListener {
         emptyStorageLayout()
         observer()
         tabLayoutSetup()
-
         return root
     }
 
